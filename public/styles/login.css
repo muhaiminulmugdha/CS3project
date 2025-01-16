@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
+
 *{
     margin: 0;
     padding: 0;
+}
+
+nav{
+    font-family: "Slackey", serif;
 }
 
 body{
@@ -14,18 +20,46 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 95vh;
-
+    height: 90.89vh;
+    color: white;
 }
+
 header{
-    /*margin: 50px 0px 0px 100px;*/
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding: 50px 0 0 100px;
-    /*margin: 50px 0px 0px 100px;*/
 }
+
 #login-form{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    height: 280px;
+    width: 300px;
+    background: rgba(255, 255, 255, 0.266);
+    padding: 50px;
+    border-radius: 30px;
+    border: 1px white solid;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.inputs input{
+    width: 300px;
+    height: 20px;
+}
+
+#loginBtn{
+    width: 100%;
+}
+
+.linkToSignUp{
+    display: flex;
 }
