@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 *{
     margin: 0;
@@ -30,6 +31,7 @@ body{
     flex-direction: column;
     height: 90.89vh;
     color: white;
+    font-family: "Inter", serif;
 }
 
 header{
@@ -44,9 +46,9 @@ header{
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    height: 280px;
+    height: 300px;
     width: 300px;
-    background: rgba(255, 255, 255, 0.266);
+    background: rgba(255, 255, 255, 0.15);
     padding: 50px;
     border-radius: 30px;
     border: 1px white solid;
@@ -61,13 +63,45 @@ header{
 
 .inputs input{
     width: 300px;
-    height: 20px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px #FFBD9C solid ;
+    box-shadow: inset 0 0 2px #000000;
+    text-indent: 10px;
+    border-radius: 5px;
+}
+
+input:focus{
+    outline: none;
 }
 
 #loginBtn{
     width: 100%;
+    background: #E37742;
+    /*border: none;*/
+    height: 60px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 9px;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    border: 1px rgba(255, 255, 255, 0.45) solid;
 }
 
 .linkToSignUp{
     display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
+}
+
+.fPass{
+    font-size: 15px;
+}
+
+a{
+    color: black;
+    font-size: 11px;
 }
