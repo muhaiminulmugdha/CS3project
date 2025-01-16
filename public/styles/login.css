@@ -9,6 +9,14 @@ nav{
     font-family: "Slackey", serif;
 }
 
+.bro{
+    color: #973803;
+}
+
+.codes{
+    color: #D75F33;
+}
+
 body{
     background: rgb(227, 236, 142);
     background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
