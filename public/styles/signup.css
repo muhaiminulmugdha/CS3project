@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+nav{
+    font-family: "Slackey", serif;
+}
+
+.bro{
+    color: #973803;
+}
+
+.codes{
+    color: #D75F33;
+}
+
+body{
+    background: rgb(227, 236, 142);
+    background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
+    backdrop-filter: blur(100px);
+}
+
+.signupForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90.89vh;
+    color: white;
+    font-family: "Inter", serif;
+}
+
+header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 50px 0 0 100px;
+}
+
+#signup-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    height: 360px;
+    width: 300px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 50px;
+    border-radius: 30px;
+    border: 1px white solid;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.inputs input{
+    width: 300px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px #FFBD9C solid ;
+    box-shadow: inset 0 0 2px #000000;
+    text-indent: 10px;
+    border-radius: 5px;
+}
+
+input:focus{
+    outline: none;
+}
+
+
+#loginBtn{
+    width: 100%;
+    background: #E37742;
+    height: 60px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 9px;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    border: 1px rgba(255, 255, 255, 0.45) solid;
+}
+
+.linkToSignUp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
+}
+
+.fPass{
+    font-size: 15px;
+}
+
+a{
+    color: black;
+    font-size: 11px;
+}
