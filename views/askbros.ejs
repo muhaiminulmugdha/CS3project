@@ -5,23 +5,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles/signup.css">
+    <link rel="stylesheet" href="styles/login.css">
     <title>Login</title>
 </head>
 <body>
 
 <header>
     <nav>
-<!--        <p><a href="/"><span class="bro">Bro</span><span class="scodes">Codes</span></a></p>-->
         <p><span class="bro">Bro</span><span class="codes">Codes</span></p>
     </nav>
 </header>
-<div class="signupForm">
-    <form method="POST" action="/signup" id="signup-form">
-        <h1>Sign Up</h1>
+<div class="loginForm">
+    <form method="POST" action="/login" id="login-form">
+        <h1>Login</h1>
         <div class="inputs">
-            <label for="name">Username</label>
-            <input required type="text" name="name" id="name"/>
             <label for="email">Email</label>
             <input required type="email" name="email" id="email"/>
             <label for="password">Password</label>
@@ -30,8 +27,8 @@
         <button id="loginBtn">Login</button>
         <p class="fPass">Forgot password?</p>
         <div class="linkToSignUp">
-            <p>Already have an account? </p>
-            <a href="/login">Login</a>
+            <p>Don't have an account? </p>
+            <a href="/signup">Sign up</a>
         </div>
     </form>
 </div>

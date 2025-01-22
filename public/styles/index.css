@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+nav{
+    font-family: "Slackey", serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+
+.middle-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.bro{
+    color: #973803;
+}
+
+.codes{
+    color: #D75F33;
+}
+
+body{
+    background: rgb(227, 236, 142);
+    background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
+    backdrop-filter: blur(100px);
+    height: 100vh;
+}
+
+a{
+    font-family: "Inter", serif;
+}
