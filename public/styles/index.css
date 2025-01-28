@@ -61,15 +61,27 @@ a{
 
 .login-top-right{
    display: flex;
-    align-content: flex-start;
-    flex-direction: row-reverse;
+    align-content: space-between;
+    justify-content: space-between;
     padding: 70px;
+
 }
+
+.login-top-right a{
+    color: #973803;
+    font-family: "Slackey", serif;
+    transition: 0.2s;
+}
+
+.login-top-right a:hover{
+    color: #D75F33;
+}
+
 
 .signup{
     display: inline-block;
     height: 25px;
-    background-color: #973803;;
+    background-color: #973803;
     padding: 10px 30px 10px 30px;
     border-radius: 10px;
 }
@@ -79,10 +91,13 @@ a{
     color: rgba(255, 121, 73, 0.75);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     font-weight: bold;
+    transition: 0.7s;
 }
 
 .signup:hover{
-    background-color: rgba(0, 0, 0, 0.34);
+    /*background-color: #D75F33;*/
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 .cpsd-logo{
