@@ -5,4 +5,6 @@ const mysqlPool = mysql.createPool({
     user: "root",
     password: "1234",
     database: "bc_db",
-})
+}).promise()
+
+// const result = await pool.query("SELECT * FROM users");

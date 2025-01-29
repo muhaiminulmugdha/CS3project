@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
 
 *{
     margin: 0;
@@ -57,9 +58,8 @@ header{
 
 .description{
     font-size: 1.3vw;
-    font-family: "Inter", serif;
+    font-family: "Sofia Sans", serif;
     color: #bd0000;
-
 }
 
 
