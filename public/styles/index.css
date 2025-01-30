@@ -15,9 +15,9 @@ nav{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /*height: 100vh;*/
     height: 60vh;
 }
+
 .main-logo{
     font-size: 50px;
 }
@@ -65,11 +65,12 @@ a{
 .login-top-right a{
     color: #973803;
     font-family: "Slackey", serif;
-    transition: 0.2s;
+    transition: 0.6s;
 }
 
 .login-top-right a:hover{
     color: #D75F33;
+    letter-spacing: 1px;
 }
 
 

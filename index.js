@@ -7,14 +7,6 @@ app.set('view engine', 'ejs');
 
 app.use("/api/v1/user", require('./routes/userRoutes'));
 
-// mySqlPool
-//     .query("SELECT 1")
-//     .then(() => {
-//         console.log("Successfully connected to the database");
-//     }).catch((error) => {
-//         console.error(error);
-// })
-
 app.listen(3000, ()=>{
     console.log("server is running on port 3000");
 });
