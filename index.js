@@ -31,3 +31,7 @@ app.get('/signup',(req,res)=>{
 app.get('/ask_bros', (req, res) => {
     res.render('ask_bros');
 });
+
+app.get('/help_bros', (req, res) => {
+    res.render('help_bros');
+});

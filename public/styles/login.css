@@ -27,6 +27,7 @@ body{
     background: rgb(227, 236, 142);
     background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
     backdrop-filter: blur(100px);
+    height: 100vh;
 }
 
 .loginForm{
@@ -34,7 +35,7 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 91vh;
+    height: 90vh;
     color: white;
     font-family: "Inter", serif;
 }

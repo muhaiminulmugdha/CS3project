@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles/askbros.css">
+    <link rel="stylesheet" href="styles/helpbros.css">
     <title>Login</title>
 </head>
 <body>
@@ -34,16 +34,29 @@
 <div class="askbrosForm">
     <form method="POST" action="/login" id="askbros-form">
         <div class="form-container">
-            <div class="askbros-header">
-                <h1>AskBros</h1>
+            <div class="credentials">
+                <img src="/images/pfp.png" alt="" class="avatar">
+                <div class="username"><p>mugxd</p></div>
             </div>
-            <div class="askbros-input">
-<!--                <input type="text">-->
-                <textarea></textarea>
+
+            <div class="asked-question">
+                <h1>How do i print hello world in python?</h1>
             </div>
-            <div class="askbros-button">
-                <button>POST</button>
+
+            <div class="comments">
+                <div class="commented-user">
+                    <img src="/images/pfp.png" alt="" class="avatar">
+                    <p>Meee</p>
+                </div>
+                <div class="sub-cmt-sec">
+                    <div class="cmnt1"><p>print("hello world")</p></div>
+                </div>
             </div>
+
+            <div class="make-a-comment">
+                <a href="">Make a Comment</a>
+            </div>
+
         </div>
 
     </form>
