@@ -35,3 +35,24 @@ app.get('/ask_bros', (req, res) => {
 app.get('/help_bros', (req, res) => {
     res.render('help_bros');
 });
+
+app.get('/comment_here', (req, res) => {
+    res.render('comment_here');
+});
+
+
+
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '1311',
+    database: 'falconflowDB'
+})
+
+con.connect(function (error){
+    if(error) throw error;
+    console.log('Connected!');
+})
+
