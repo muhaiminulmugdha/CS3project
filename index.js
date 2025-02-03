@@ -35,3 +35,7 @@ app.get('/ask_bros', (req, res) => {
 app.get('/help_bros', (req, res) => {
     res.render('help_bros');
 });
+
+app.get('/comment_here', (req, res) => {
+    res.render('comment_here');
+});
