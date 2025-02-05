@@ -33,7 +33,6 @@ nav a{
     font-size: 15px;
 }
 
-
 nav p a{
     text-decoration: none;
     font-size: 16px;
@@ -78,13 +77,12 @@ body{
     border-radius: 10px;
 }
 
-
 #askbros-form{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    height: 300px;
+    height: 350px;
     width: 500px;
     background: rgba(255, 255, 255, 0.15);
     padding: 50px;
@@ -155,18 +153,14 @@ a{
 }
 
 .nav-objects{
-    /*border: 3px solid rgb(175, 47, 0);*/
     padding: 3px 15px 3px 15px;
     border-radius: 5px;
-    /*background-color: rgba(255, 174, 145, 0.32);*/
     transition: 0.7s;
 }
 
 .nav-objects:hover{
     background-color: rgb(227, 119, 66);
-    /*border: 3px solid rgb(175, 47, 0);*/
     letter-spacing: 1px;
-
 }
 
 .avatar{
@@ -179,23 +173,27 @@ a{
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 7px;
+    padding: 10px 20px 10px 10px;
+}
+
+.top-part{
+    background-color: rgba(7, 2, 2, 0.8);
+    border: 8px solid rgb(181, 181, 181);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 20px;
 }
 
 .username p{
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .asked-question{
-    background-color: rgba(7, 2, 2, 0.8);
     padding: 10px 20px 10px 20px;
-    /*border-radius: 10px 10px 10px 10px;*/
     border-radius: 20px;
     height: 70px;
     overflow: scroll;
     font-size: 9px;
-    border: 8px solid rgb(181, 181, 181);
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .comments{
     background-color: rgb(181, 181, 181);
@@ -246,4 +244,6 @@ a{
     width: 300px;
     text-align: center;
 }
+
+
 
