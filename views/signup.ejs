@@ -12,29 +12,27 @@
 
 <header>
     <nav>
-<!--        <p><a href="/"><span class="bro">Bro</span><span class="scodes">Codes</span></a></p>-->
-<!--        <p><span class="bro">Bro</span><span class="codes">Codes</span></p>-->
-        <p><a href="/"><span class="bro">Bro</span><span class="codes">Codes</span></a></p>
+        <p><a href="/"><span class="bro">Falcon</span><span class="codes">Flow</span></a></p>
     </nav>
 </header>
 <div class="signupForm">
-    <form method="POST" action="/signup" id="signup-form">
+    <form method="POST" action="/api/v1/users/signup" id="signup-form">
         <h1>Sign Up</h1>
         <div class="inputs">
-            <label for="name">Username</label>
-            <input required type="text" name="name" id="name"/>
+            <label for="username">Username</label>
+            <input required type="text" name="username" id="username"/>
             <label for="email">Email</label>
             <input required type="email" name="email" id="email"/>
             <label for="password">Password</label>
             <input required type="password" name="password" id="password"/>
         </div>
-        <button id="loginBtn">Sign Up</button>
-        <p class="fPass">Forgot password?</p>
+        <button id="signupBtn">Sign Up</button>
         <div class="linkToSignUp">
             <p>Already have an account? </p>
             <a href="/login">Login</a>
         </div>
     </form>
+
 </div>
 
 </body>
