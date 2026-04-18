@@ -59,4 +59,77 @@ router.post('/api/v1/users/login', async (req, res) => {
     }
 });
 
+const requireLogin = require('../../middleware/auth');
+
+// Account page
+router.get('/account', requireLogin, async (req, res) => {
+    res.render('account', { 
+        user: req.session.user, 
+        error: null, 
+        success: null 
+    });
+});
+
+// Change username
+router.post('/account/username', requireLogin, async (req, res) => {
+    try {
+        const { username } = req.body;
+        await User.findByIdAndUpdate(req.session.user._id, { username });
+        req.session.user.username = username;
+        res.render('account', { 
+            user: req.session.user, 
+            success: 'Username updated successfully!', 
+            error: null 
+        });
+    } catch (err) {
+        console.error(err);
+        res.render('account', { 
+            user: req.session.user, 
+            error: 'Error updating username', 
+            success: null 
+        });
+    }
+});
+
+// Change password
+router.post('/account/password', requireLogin, async (req, res) => {
+    try {
+        const { currentPassword, newPassword, confirmPassword } = req.body;
+
+        if (newPassword !== confirmPassword) {
+            return res.render('account', { 
+                user: req.session.user, 
+                error: 'New passwords do not match', 
+                success: null 
+            });
+        }
+
+        const user = await User.findById(req.session.user._id);
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+        if (!isMatch) {
+            return res.render('account', { 
+                user: req.session.user, 
+                error: 'Current password is incorrect', 
+                success: null 
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await User.findByIdAndUpdate(req.session.user._id, { password: hashedPassword });
+
+        res.render('account', { 
+            user: req.session.user, 
+            success: 'Password updated successfully!', 
+            error: null 
+        });
+    } catch (err) {
+        console.error(err);
+        res.render('account', { 
+            user: req.session.user, 
+            error: 'Error updating password', 
+            success: null 
+        });
+    }
+});
 module.exports = router;

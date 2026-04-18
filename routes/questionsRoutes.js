@@ -7,7 +7,7 @@ const requireLogin = require('../middleware/auth');
 router.get('/ask_bros', requireLogin, async (req, res) => {
     try {
         const questions = await Question.find().sort({ createdAt: -1 });
-        res.render('ask_bros', { questions });
+        res.render('ask_bros', { questions, user: req.session.user });
     } catch (err) {
         console.error(err);
         res.send('Error fetching questions');
@@ -16,7 +16,6 @@ router.get('/ask_bros', requireLogin, async (req, res) => {
 
 router.post('/ask-question', requireLogin, async (req, res) => {
     try {
-        console.log('Session user:', req.session.user);
         const newQuestion = new Question({ 
             askedquestions: req.body.ask_question,
             username: req.session.user.username
@@ -33,7 +32,7 @@ router.get('/question/:id', requireLogin, async (req, res) => {
     try {
         const question = await Question.findById(req.params.id);
         const answers = await Answer.find({ questionId: req.params.id }).sort({ createdAt: 1 });
-        res.render('question', { question, answers });
+        res.render('question', { question, answers, user: req.session.user });
     } catch (err) {
         console.error(err);
         res.send('Error fetching question');
@@ -42,7 +41,6 @@ router.get('/question/:id', requireLogin, async (req, res) => {
 
 router.post('/question/:id/answer', requireLogin, async (req, res) => {
     try {
-        console.log('Session user:', req.session.user);
         const newAnswer = new Answer({
             questionId: req.params.id,
             answer: req.body.answer,
