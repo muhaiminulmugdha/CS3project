@@ -44,7 +44,11 @@ router.post('/api/v1/users/login', async (req, res) => {
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
-            req.session.user = user;
+            req.session.user = {
+                _id: user._id,
+                username: user.username,
+                email: user.email
+            };
             res.redirect('/ask_bros');
         } else {
             res.render('login', { error: 'Invalid email or password', email });
