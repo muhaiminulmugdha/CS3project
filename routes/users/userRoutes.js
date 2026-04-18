@@ -2,6 +2,8 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const router = express.Router();
 const User = require('../../models/User');
+const devEmails = require('../../config/devEmail');
+const requireLogin = require('../../middleware/auth');
 
 // Signup route
 router.post('/api/v1/users/signup', async (req, res) => {
@@ -12,20 +14,19 @@ router.post('/api/v1/users/signup', async (req, res) => {
     }
 
     try {
-        // Check if email already exists
         const existingEmail = await User.findOne({ email });
         if (existingEmail) {
             return res.render('signup', { error: 'Email already exists', username, email });
         }
 
-        // Check if username already exists
         const existingUsername = await User.findOne({ username });
         if (existingUsername) {
             return res.render('signup', { error: 'Username already taken, please choose another', username, email });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, email, password: hashedPassword });
+        const role = devEmails.includes(email) ? 'teacher' : 'student';
+        const newUser = new User({ username, email, password: hashedPassword, role });
         await newUser.save();
 
         res.redirect('/login');
@@ -54,7 +55,8 @@ router.post('/api/v1/users/login', async (req, res) => {
             req.session.user = {
                 _id: user._id,
                 username: user.username,
-                email: user.email
+                email: user.email,
+                role: user.role
             };
             res.redirect('/ask_bros');
         } else {
@@ -66,15 +68,9 @@ router.post('/api/v1/users/login', async (req, res) => {
     }
 });
 
-const requireLogin = require('../../middleware/auth');
-
 // Account page
 router.get('/account', requireLogin, async (req, res) => {
-    res.render('account', { 
-        user: req.session.user, 
-        error: null, 
-        success: null 
-    });
+    res.render('account', { user: req.session.user, error: null, success: null });
 });
 
 // Change username
@@ -83,18 +79,10 @@ router.post('/account/username', requireLogin, async (req, res) => {
         const { username } = req.body;
         await User.findByIdAndUpdate(req.session.user._id, { username });
         req.session.user.username = username;
-        res.render('account', { 
-            user: req.session.user, 
-            success: 'Username updated successfully!', 
-            error: null 
-        });
+        res.render('account', { user: req.session.user, success: 'Username updated successfully!', error: null });
     } catch (err) {
         console.error(err);
-        res.render('account', { 
-            user: req.session.user, 
-            error: 'Error updating username', 
-            success: null 
-        });
+        res.render('account', { user: req.session.user, error: 'Error updating username', success: null });
     }
 });
 
@@ -104,39 +92,23 @@ router.post('/account/password', requireLogin, async (req, res) => {
         const { currentPassword, newPassword, confirmPassword } = req.body;
 
         if (newPassword !== confirmPassword) {
-            return res.render('account', { 
-                user: req.session.user, 
-                error: 'New passwords do not match', 
-                success: null 
-            });
+            return res.render('account', { user: req.session.user, error: 'New passwords do not match', success: null });
         }
 
         const user = await User.findById(req.session.user._id);
         const isMatch = await bcrypt.compare(currentPassword, user.password);
 
         if (!isMatch) {
-            return res.render('account', { 
-                user: req.session.user, 
-                error: 'Current password is incorrect', 
-                success: null 
-            });
+            return res.render('account', { user: req.session.user, error: 'Current password is incorrect', success: null });
         }
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         await User.findByIdAndUpdate(req.session.user._id, { password: hashedPassword });
-
-        res.render('account', { 
-            user: req.session.user, 
-            success: 'Password updated successfully!', 
-            error: null 
-        });
+        res.render('account', { user: req.session.user, success: 'Password updated successfully!', error: null });
     } catch (err) {
         console.error(err);
-        res.render('account', { 
-            user: req.session.user, 
-            error: 'Error updating password', 
-            success: null 
-        });
+        res.render('account', { user: req.session.user, error: 'Error updating password', success: null });
     }
 });
+
 module.exports = router;

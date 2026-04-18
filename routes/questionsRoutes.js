@@ -58,15 +58,13 @@ router.post('/question/:id/delete', requireLogin, async (req, res) => {
     try {
         const question = await Question.findById(req.params.id);
 
-        // Check if the logged in user is the one who asked
-        if (question.username !== req.session.user.username) {
+        // Allow if owner OR teacher
+        if (question.username !== req.session.user.username && req.session.user.role !== 'teacher') {
             return res.status(403).send('You can only delete your own questions');
         }
 
-        // Delete question and all its answers
         await Answer.deleteMany({ questionId: req.params.id });
         await Question.findByIdAndDelete(req.params.id);
-
         res.redirect('/ask_bros');
     } catch (err) {
         console.error(err);
