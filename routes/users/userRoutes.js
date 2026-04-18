@@ -12,9 +12,16 @@ router.post('/api/v1/users/signup', async (req, res) => {
     }
 
     try {
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
+        // Check if email already exists
+        const existingEmail = await User.findOne({ email });
+        if (existingEmail) {
             return res.render('signup', { error: 'Email already exists', username, email });
+        }
+
+        // Check if username already exists
+        const existingUsername = await User.findOne({ username });
+        if (existingUsername) {
+            return res.render('signup', { error: 'Username already taken, please choose another', username, email });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
