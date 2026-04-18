@@ -16,15 +16,18 @@ nav{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 20px 5px 20px;
+    border-bottom: 3px solid #973803;
+    /*background: linear-gradient(90deg, rgba(227, 236, 142,1) 10%, rgba(239, 105, 67, 0.5) 90%);*/
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
-.nav-bar{
+.nav-bar {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 50px 0 0 100px;
     gap: 70px;
-    margin-right: 100px;
 }
 
 nav a{
@@ -33,14 +36,18 @@ nav a{
     font-size: 15px;
 }
 
-
 nav p a{
     text-decoration: none;
     font-size: 16px;
 }
 
 .main-logo{
-    padding: 50px 0 0 100px;
+    /*padding: 50px 0 0 100px;*/
+    /*margin-top: 80px;*/
+}
+
+.main-logo a{
+    font-size: 35px;
 }
 
 
@@ -58,6 +65,7 @@ body{
     backdrop-filter: blur(100px);
     height: 100vh;
 }
+
 
 .askbrosForm{
     display: flex;
@@ -78,13 +86,12 @@ body{
     border-radius: 10px;
 }
 
-
 #askbros-form{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    height: 300px;
+    height: 350px;
     width: 500px;
     background: rgba(255, 255, 255, 0.15);
     padding: 50px;
@@ -155,18 +162,14 @@ a{
 }
 
 .nav-objects{
-    /*border: 3px solid rgb(175, 47, 0);*/
     padding: 3px 15px 3px 15px;
     border-radius: 5px;
-    /*background-color: rgba(255, 174, 145, 0.32);*/
     transition: 0.7s;
 }
 
 .nav-objects:hover{
     background-color: rgb(227, 119, 66);
-    /*border: 3px solid rgb(175, 47, 0);*/
     letter-spacing: 1px;
-
 }
 
 .avatar{
@@ -179,26 +182,30 @@ a{
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 7px;
+    padding: 10px 20px 10px 10px;
+}
+
+.top-part{
+    background-color: rgb(110, 29, 0);
+    border: 8px solid rgba(62, 0, 0, 0.75);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 20px;
 }
 
 .username p{
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .asked-question{
-    background-color: rgba(7, 2, 2, 0.8);
     padding: 10px 20px 10px 20px;
-    /*border-radius: 10px 10px 10px 10px;*/
     border-radius: 20px;
     height: 70px;
     overflow: scroll;
     font-size: 9px;
-    border: 8px solid rgb(181, 181, 181);
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .comments{
-    background-color: rgb(181, 181, 181);
+    background-color: rgb(62, 0, 0);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -216,7 +223,7 @@ a{
     align-items: center;
     gap: 10px;
     justify-content: center;
-    background-color: rgba(7, 2, 2, 0.8);
+    background-color: rgb(110, 29, 0);
     padding: 5px 0px 5px 0px;
     border-radius: 10px;
 }
@@ -231,7 +238,7 @@ a{
     font-size: 13px;
     overflow: scroll;
     text-align: left;
-    background-color: rgba(7, 2, 2, 0.8);
+    background-color: rgb(110, 29, 0);
     margin-top: 5px;
     border-radius: 5px;
     height: 100px;
@@ -239,11 +246,13 @@ a{
 
 .make-a-comment a{
     text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.65);
+    /*background-color: rgba(255, 255, 255, 0.65);*/
+    background-color: rgb(110, 29, 0);
     border-radius: 10px;
     height: 25px;
     padding: 7px 150px 7px 150px;
     width: 300px;
     text-align: center;
+    color: white;
+    border: 5px solid rgba(62, 0, 0, 0.75);
 }
-
