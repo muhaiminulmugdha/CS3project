@@ -1,12 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-
-// Question model
-const Question = mongoose.model('Question', new mongoose.Schema({
-    askedquestions: String,
-    createdAt: { type: Date, default: Date.now }
-}));
+const Question = require('../models/Question');
 
 router.get('/ask_bros', async (req, res) => {
     try {
@@ -20,9 +14,7 @@ router.get('/ask_bros', async (req, res) => {
 
 router.post('/ask-question', async (req, res) => {
     try {
-        const newQuestion = new Question({ 
-            askedquestions: req.body.ask_question 
-        });
+        const newQuestion = new Question({ askedquestions: req.body.ask_question });
         await newQuestion.save();
         console.log('Question saved!');
         res.redirect('/ask_bros');

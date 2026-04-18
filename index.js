@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const connectDB = require('./config/db');
 const questionRoutes = require('./routes/questionsRoutes');
+const userRoutes = require('./routes/users/userRoutes');
+const feedRoutes = require('./routes/feedRoute');
 
 // Connect to MongoDB
 connectDB();
@@ -12,23 +15,22 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-app.use("/", questionRoutes);
+// Session setup
+app.use(session({
+    secret: 'falconflow_secret',
+    resave: false,
+    saveUninitialized: false
+}));
 
-app.get('/', (req, res) => {
-    res.render('index');
-});
-app.get('/about', (req, res) => {
-    res.render('about');
-});
-app.get('/login', (req, res) => {
-    res.render('login');
-});
-app.get('/signup', (req, res) => {
-    res.render('signup');
-});
-app.get('/comment_here', (req, res) => {
-    res.render('comment_here');
-});
+app.use("/", questionRoutes);
+app.use("/", userRoutes);
+app.use("/", feedRoutes);
+
+app.get('/', (req, res) => { res.render('index'); });
+app.get('/about', (req, res) => { res.render('about'); });
+app.get('/login', (req, res) => { res.render('login', { error: null, email: null }); });
+app.get('/signup', (req, res) => { res.render('signup', { error: null, username: null, email: null }); });
+app.get('/comment_here', (req, res) => { res.render('comment_here'); });
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
