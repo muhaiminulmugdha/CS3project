@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/styles/askbros.css">
-    <title>AskBros</title>
+    <link rel="stylesheet" href="/styles/question.css">
+    <title>Question</title>
 </head>
 <body>
 <header>
@@ -25,39 +25,42 @@
     </nav>
 </header>
 
-<div class="askbrosForm">
-    <form method="POST" action="/ask-question" id="bros-form">
-        <div class="form-container">
-            <div class="askbros-header">
-                <h1>AskBros</h1>
-            </div>
-            <div class="askbros-input">
-                <textarea name="ask_question" placeholder="Ask your question..."></textarea>
-            </div>
-            <div class="askbros-button">
-                <button type="submit">POST</button>
-            </div>
-        </div>
-    </form>
-</div>
+<div class="question-page">
 
-<div class="questions-feed">
-    <p class="feed-label">Recent Questions</p>
-    <% if (questions.length === 0) { %>
-        <p class="no-questions">No questions yet. Be the first to ask!</p>
-    <% } else { %>
-        <% questions.forEach(function(q) { %>
-            <a href="/question/<%= q._id %>" class="question-card-link">
-                <div class="question-card">
-                    <p class="question-text"><%= q.askedquestions %></p>
-                    <div class="question-meta">
-                        <span class="question-date"><%= q.createdAt.toDateString() %></span>
-                        <span class="question-tag">question</span>
-                    </div>
+    <!-- Back button -->
+    <a href="/ask_bros" class="back-btn">← Back to AskBros</a>
+
+    <!-- Question -->
+    <div class="question-box">
+        <p class="question-text"><%= question.askedquestions %></p>
+        <span class="question-date"><%= question.createdAt.toDateString() %></span>
+    </div>
+
+    <!-- Answers -->
+    <div class="answers-section">
+        <p class="section-label"><%= answers.length %> Answer<%= answers.length !== 1 ? 's' : '' %></p>
+
+        <% if (answers.length === 0) { %>
+            <p class="no-answers">No answers yet. Be the first to help!</p>
+        <% } else { %>
+            <% answers.forEach(function(a) { %>
+                <div class="answer-card">
+                    <p class="answer-text"><%= a.answer %></p>
+                    <span class="answer-date"><%= a.createdAt.toDateString() %></span>
                 </div>
-            </a>
-        <% }) %>
-    <% } %>
+            <% }) %>
+        <% } %>
+    </div>
+
+    <!-- Answer form -->
+    <div class="answer-form-box">
+        <p class="section-label">Your Answer</p>
+        <form method="POST" action="/question/<%= question._id %>/answer">
+            <textarea name="answer" placeholder="Write your answer here..."></textarea>
+            <button type="submit">POST ANSWER</button>
+        </form>
+    </div>
+
 </div>
 
 <script>
