@@ -1,58 +1,36 @@
-const express= require('express');
+const express = require('express');
 const app = express();
-const mySqlPool = require("./config/db.js")
+const bodyParser = require('body-parser');
+const questionRoutes = require('./routes/questionsRoutes');
 
-app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
-app.use("/api/v1/user", require('./routes/userRoutes'));
+app.use("/", questionRoutes);
 
-app.listen(3000, ()=>{
-    console.log("server is running on port 3000");
-});
-
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get("/about", (req, res) => {
+app.get('/about', (req, res) => {
     res.render('about');
-})
+});
 
-app.get('/login',(req,res)=>{
+app.get('/login', (req, res) => {
     res.render('login');
 });
 
-
-app.get('/signup',(req,res)=>{
+app.get('/signup', (req, res) => {
     res.render('signup');
-});
-
-app.get('/ask_bros', (req, res) => {
-    res.render('ask_bros');
-});
-
-app.get('/help_bros', (req, res) => {
-    res.render('help_bros');
 });
 
 app.get('/comment_here', (req, res) => {
     res.render('comment_here');
 });
 
-
-
-const mysql = require('mysql');
-
-const con = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '1311',
-    database: 'falconflowDB'
-})
-
-con.connect(function (error){
-    if(error) throw error;
-    console.log('Connected!');
-})
-
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+});
