@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const mysql = require('mysql2');
 
 // Create the connection pool
@@ -27,4 +28,16 @@ pool.getConnection((err, connection) => {
 // Export the pool to be used in other files (promise-based)
 module.exports = pool.promise();
 
+=======
+// const mysql = require("mysql2");
+//
+// const mysqlPool = mysql.createPool({
+//     host: "localhost",
+//     user: "root",
+//     password: "1234",
+//     database: "bc_db",
+// }).promise()
+
+// const result = await pool.query("SELECT * FROM users");
+>>>>>>> origin/master
 
