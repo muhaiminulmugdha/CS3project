@@ -72,6 +72,16 @@
         document.body.classList.add('dark');
         document.getElementById('toggleBtn').textContent = '☀️ Light';
     }
+
+    // Live search
+    document.querySelector('.search-bar').addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.question-row-link');
+        rows.forEach(row => {
+            const text = row.querySelector('.question-title').textContent.toLowerCase();
+            row.style.display = text.includes(query) ? 'block' : 'none';
+        });
+    });
 </script>
 </body>
 </html>
