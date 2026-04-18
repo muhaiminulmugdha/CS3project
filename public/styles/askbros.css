@@ -239,3 +239,10 @@ nav {
     border-color: var(--accent2);
     cursor: pointer;
 }
+
+.question-user {
+    font-size: 11px;
+    color: var(--accent2);
+    font-weight: 500;
+    margin-left: 8px;
+}

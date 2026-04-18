@@ -27,32 +27,33 @@
 
 <div class="question-page">
 
-    <!-- Back button -->
     <a href="/ask_bros" class="back-btn">← Back to AskBros</a>
 
-    <!-- Question -->
     <div class="question-box">
         <p class="question-text"><%= question.askedquestions %></p>
-        <span class="question-date"><%= question.createdAt.toDateString() %></span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <span class="question-date"><%= question.createdAt.toDateString() %></span>
+            <span class="question-user">👤 <%= question.username %></span>
+        </div>
     </div>
 
-    <!-- Answers -->
     <div class="answers-section">
         <p class="section-label"><%= answers.length %> Answer<%= answers.length !== 1 ? 's' : '' %></p>
-
         <% if (answers.length === 0) { %>
             <p class="no-answers">No answers yet. Be the first to help!</p>
         <% } else { %>
             <% answers.forEach(function(a) { %>
                 <div class="answer-card">
                     <p class="answer-text"><%= a.answer %></p>
-                    <span class="answer-date"><%= a.createdAt.toDateString() %></span>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="answer-date"><%= a.createdAt.toDateString() %></span>
+                        <span class="answer-user">👤 <%= a.username %></span>
+                    </div>
                 </div>
             <% }) %>
         <% } %>
     </div>
 
-    <!-- Answer form -->
     <div class="answer-form-box">
         <p class="section-label">Your Answer</p>
         <form method="POST" action="/question/<%= question._id %>/answer">

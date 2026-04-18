@@ -52,7 +52,10 @@
                     <p class="question-text"><%= q.askedquestions %></p>
                     <div class="question-meta">
                         <span class="question-date"><%= q.createdAt.toDateString() %></span>
-                        <span class="question-tag">question</span>
+                        <div>
+                            <span class="question-tag">question</span>
+                            <span class="question-user">👤 <%= q.username %></span>
+                        </div>
                     </div>
                 </div>
             </a>
