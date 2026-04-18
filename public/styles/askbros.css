@@ -239,3 +239,19 @@ nav {
     font-weight: 500;
     margin-left: 8px;
 }
+
+.account-btn {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+}
+
+.account-btn:hover {
+    border-color: var(--accent2);
+    color: var(--accent2);
+}
