@@ -1,47 +1,35 @@
 const express = require('express');
-const pool = require('../config/db.js');
 const router = express.Router();
+const mongoose = require('mongoose');
 
-// GET route to display the page for asking a question
+// Question model
+const Question = mongoose.model('Question', new mongoose.Schema({
+    askedquestions: String,
+    createdAt: { type: Date, default: Date.now }
+}));
 
-
-router.get('/ask_bros', (req, res) => {
-    res.render('ask_bros');
-})
-
-// router.get('/', (req, res) => {
-//     pool.query("SELECT * FROM questions", (err, results) => {
-//         if (err) {
-//             console.error(err);
-//         } else {
-//             res.render('ask_bros', {questions:results});
-//         }
-//     });
-// });
-
-
-
-
-
-
-router.post('/ask-question', (req, res) => {
-    const ask_q = req.body.ask_question;
-    console.log(ask_q);
-    try{
-        pool.query("INSERT INTO questions (askedquestions) VALUES (?)",
-            [ask_q], (err, results) => {
-                if (err){
-                    console.error(err);
-                    return res.send("error inserting question")
-                } else {
-                    console.log("data has been added to the database!");
-                    res.render('/ask_bros');
-                }
-            });
-    } catch (error) {
-        console.error(error);
+router.get('/ask_bros', async (req, res) => {
+    try {
+        const questions = await Question.find().sort({ createdAt: -1 });
+        res.render('ask_bros', { questions });
+    } catch (err) {
+        console.error(err);
+        res.send('Error fetching questions');
     }
+});
 
+router.post('/ask-question', async (req, res) => {
+    try {
+        const newQuestion = new Question({ 
+            askedquestions: req.body.ask_question 
+        });
+        await newQuestion.save();
+        console.log('Question saved!');
+        res.redirect('/ask_bros');
+    } catch (err) {
+        console.error(err);
+        res.send('Error saving question');
+    }
 });
 
 module.exports = router;
