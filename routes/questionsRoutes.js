@@ -16,6 +16,7 @@ router.get('/ask_bros', requireLogin, async (req, res) => {
 
 router.post('/ask-question', requireLogin, async (req, res) => {
     try {
+        console.log('Session user:', req.session.user);
         const newQuestion = new Question({ 
             askedquestions: req.body.ask_question,
             username: req.session.user.username
@@ -27,7 +28,6 @@ router.post('/ask-question', requireLogin, async (req, res) => {
         res.send('Error saving question');
     }
 });
-
 
 router.get('/question/:id', requireLogin, async (req, res) => {
     try {
@@ -42,6 +42,7 @@ router.get('/question/:id', requireLogin, async (req, res) => {
 
 router.post('/question/:id/answer', requireLogin, async (req, res) => {
     try {
+        console.log('Session user:', req.session.user);
         const newAnswer = new Answer({
             questionId: req.params.id,
             answer: req.body.answer,
