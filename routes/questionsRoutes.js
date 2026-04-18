@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
+const requireLogin = require('../middleware/auth');
 
-router.get('/ask_bros', async (req, res) => {
+router.get('/ask_bros', requireLogin, async (req, res) => {
     try {
         const questions = await Question.find().sort({ createdAt: -1 });
         res.render('ask_bros', { questions });
@@ -13,7 +14,7 @@ router.get('/ask_bros', async (req, res) => {
     }
 });
 
-router.post('/ask-question', async (req, res) => {
+router.post('/ask-question', requireLogin, async (req, res) => {
     try {
         const newQuestion = new Question({ askedquestions: req.body.ask_question });
         await newQuestion.save();
@@ -24,8 +25,7 @@ router.post('/ask-question', async (req, res) => {
     }
 });
 
-// Question detail page
-router.get('/question/:id', async (req, res) => {
+router.get('/question/:id', requireLogin, async (req, res) => {
     try {
         const question = await Question.findById(req.params.id);
         const answers = await Answer.find({ questionId: req.params.id }).sort({ createdAt: 1 });
@@ -36,8 +36,7 @@ router.get('/question/:id', async (req, res) => {
     }
 });
 
-// Post an answer
-router.post('/question/:id/answer', async (req, res) => {
+router.post('/question/:id/answer', requireLogin, async (req, res) => {
     try {
         const newAnswer = new Answer({
             questionId: req.params.id,
