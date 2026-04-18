@@ -54,4 +54,24 @@ router.post('/question/:id/answer', requireLogin, async (req, res) => {
     }
 });
 
+router.post('/question/:id/delete', requireLogin, async (req, res) => {
+    try {
+        const question = await Question.findById(req.params.id);
+
+        // Check if the logged in user is the one who asked
+        if (question.username !== req.session.user.username) {
+            return res.status(403).send('You can only delete your own questions');
+        }
+
+        // Delete question and all its answers
+        await Answer.deleteMany({ questionId: req.params.id });
+        await Question.findByIdAndDelete(req.params.id);
+
+        res.redirect('/ask_bros');
+    } catch (err) {
+        console.error(err);
+        res.send('Error deleting question');
+    }
+});
+
 module.exports = router;
