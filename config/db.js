@@ -4,7 +4,7 @@ const mysql = require('mysql2');
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'yourpassword', // <-- change to your real password
+    password: '1234', // <-- change to your real password
     database: 'falconflowdb',
     waitForConnections: true,
     connectionLimit: 10,

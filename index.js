@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const questionRoutes = require('./routes/questionsRoutes');
-const mysql = require('mysql2');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -30,18 +29,6 @@ app.get('/signup', (req, res) => {
 
 app.get('/comment_here', (req, res) => {
     res.render('comment_here');
-});
-
-const con = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '1311',
-    database: 'falconflowDB'
-});
-
-con.connect(function (error) {
-    if (error) throw error;
-    console.log('Connected!');
 });
 
 app.listen(3000, () => {
