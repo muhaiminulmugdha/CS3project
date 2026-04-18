@@ -1,24 +1,13 @@
-const mysql = require('mysql2');
+const mongoose = require('mongoose');
 
-// Create the connection pool
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '1234', // <-- change to your real password
-    database: 'falconflowdb',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-});
-
-pool.getConnection((err, connection) => {
-    if (err) {
+const connectDB = async () => {
+    try {
+        await mongoose.connect('mongodb+srv://muhtasimhaqinfo_db_user:JdUE8XTOBcR3UKT4@falconflow.yealgrq.mongodb.net/falconflowdb?appName=falconflow');
+        console.log('Connected to MongoDB!');
+    } catch (err) {
         console.error('Database connection failed:', err);
-    } else {
-        console.log('Connected to MySQL database!');
-        connection.release();
+        process.exit(1);
     }
-});
+};
 
-// Export pool
-module.exports = pool.promise();
+module.exports = connectDB;

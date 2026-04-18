@@ -1,33 +1,51 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
-const mySqlPool = require('../../config/db');
+const User = require('../../models/User');
 
-// Login route
-router.post('/login', async (req, res) => {
-    const { username, email, password } = req.body; // Get data from the form
+// Signup route
+router.post('/api/v1/users/signup', async (req, res) => {
+    const { username, email, password } = req.body;
 
-    // Validate input
     if (!username || !email || !password) {
-        return res.render('login', { error: 'Please enter both email and password', email });
+        return res.render('signup', { error: 'All fields are required', username, email });
     }
 
     try {
-        // Find the user by email
-        const [user] = await mySqlPool.execute('SELECT * FROM users WHERE email = ?', [email]);
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.render('signup', { error: 'Email already exists', username, email });
+        }
 
-        if (user.length === 0) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ username, email, password: hashedPassword });
+        await newUser.save();
+
+        res.redirect('/login');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Login route
+router.post('/api/v1/users/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.render('login', { error: 'Please enter email and password', email });
+    }
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
             return res.render('login', { error: 'Invalid email or password', email });
         }
 
-        const userData = user[0];
-
-        // Compare passwords
-        const isMatch = await bcrypt.compare(password, userData.password);
-
+        const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
-            req.session.user = userData;  // Store user data in session
-            res.redirect('/dashboard');  // Redirect to dashboard
+            req.session.user = user;
+            res.redirect('/ask_bros');
         } else {
             res.render('login', { error: 'Invalid email or password', email });
         }
@@ -36,41 +54,5 @@ router.post('/login', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-
-// Signup route
-router.post('/signup', async (req, res) => {
-    const { username, email, password } = req.body;
-
-    // Validate inputs
-    if (!username || !email || !password) {
-        return res.render('signup', { error: 'All fields are required', username, email });
-    }
-
-    try {
-        // Check if email already exists
-        const [existingUser] = await mySqlPool.execute('SELECT * FROM users WHERE email = ?', [email]);
-
-        if (existingUser.length > 0) {
-            return res.render('signup', { error: 'Email already exists', username, email });
-        }
-
-        // Hash password before storing
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Insert new user into database
-        await mySqlPool.execute(
-            'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-            [username, email, hashedPassword]
-        );
-
-        // Redirect to login page after successful signup
-        res.redirect('/login');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error');
-    }
-});
-
-
 
 module.exports = router;

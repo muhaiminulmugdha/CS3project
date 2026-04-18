@@ -1,173 +1,241 @@
 @import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    height: 100vh;
+:root {
+    --bg: #f5f0e8;
+    --card-bg: #fff;
+    --nav-bg: #fff;
+    --text: #1a1a1a;
+    --muted: #666;
+    --border: rgba(0,0,0,0.1);
+    --btn-bg: #D75F33;
+    --input-bg: #f9f6f0;
+    --accent: #973803;
+    --accent2: #D75F33;
+    --tag-bg: #fdeee6;
+    --tag-text: #973803;
 }
 
-nav{
-    font-family: "Slackey", serif;
+body.dark {
+    --bg: #1a1a1a;
+    --card-bg: #242424;
+    --nav-bg: #1e1e1e;
+    --text: #f0f0f0;
+    --muted: #aaa;
+    --border: rgba(255,255,255,0.1);
+    --input-bg: #2a2a2a;
+    --tag-bg: #3a1f0f;
+    --tag-text: #f0a070;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+}
+
+header {
+    background: var(--nav-bg);
+    border-bottom: 0.5px solid var(--border);
+    transition: background 0.3s;
+}
+
+nav {
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 40px;
+}
+
+.main-logo p a {
+    text-decoration: none;
+    font-family: "Slackey", serif;
+    font-size: 20px;
+}
+
+.bro {
+    color: #973803;
+}
+
+.codes {
+    color: #D75F33;
+}
+
+.nav-bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-objects a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.nav-objects a:hover {
+    color: var(--accent2);
+}
+
+.search-bar {
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--text);
+    width: 160px;
+    outline: none;
+}
+
+.dark-toggle {
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text);
+    font-family: "Inter", sans-serif;
+}
+
+.logout a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.askbrosForm {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+#bros-form .form-container {
+    background: var(--card-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: background 0.3s;
+}
+
+.askbros-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: var(--text);
+}
+
+.askbros-input textarea {
+    width: 100%;
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--text);
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+    font-family: "Inter", sans-serif;
+    transition: background 0.3s;
+}
+
+.askbros-button {
+    margin-top: 12px;
+}
+
+.askbros-button button {
+    background: var(--btn-bg);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    font-family: "Inter", sans-serif;
+}
+
+.askbros-button button:hover {
+    opacity: 0.9;
+}
+
+.questions-feed {
+    max-width: 700px;
+    margin: 10px auto 30px;
+    padding: 0 20px;
+}
+
+.feed-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+}
+
+.question-card {
+    background: var(--card-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    transition: background 0.3s;
+}
+
+.question-text {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.question-meta {
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.nav-bar{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 50px 0 0 100px;
-    gap: 70px;
-    margin-right: 100px;
-}
-
-nav a{
-    text-decoration: none;
-    color: #973803;
-    font-size: 15px;
-}
-
-
-nav p a{
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.main-logo{
-    padding: 50px 0 0 100px;
-}
-
-.main-logo a{
-    font-size: 35px;
-}
-
-
-.bro{
-    color: #973803;
-}
-
-.codes{
-    color: #D75F33;
-}
-
-body{
-    background: rgb(227, 236, 142);
-    background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
-    backdrop-filter: blur(100px);
-}
-
-.askbrosForm{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 91vh;
-    color: white;
-    font-family: "Inter", serif;
-}
-
-.search-bar{
-    height: 25px;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.37);
-    border: #E37742 solid 1px;
-    text-indent: 10px;
-    border-radius: 10px;
-}
-
-
-#askbros-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    height: 300px;
-    width: 500px;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 50px;
-    border-radius: 30px;
-    border: 1px white solid;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-}
-
-.form-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.form-container textarea{
-    width: 470px;
-    height: 180px;
-    background-color: rgba(255, 255, 255, 0.36);
-    border-radius: 10px;
-    border: #FFBD9C 1px solid;
-    padding: 10px;
-    outline: #E37742 solid 2px;
-    resize: none;
-}
-
-
-#loginBtn{
-    width: 100%;
-    background: #E37742;
-    /*border: none;*/
-    height: 60px;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 9px;
-    letter-spacing: 1px;
-    border-radius: 5px;
-    border: 1px rgba(255, 255, 255, 0.45) solid;
-}
-
-.linkToSignUp{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-    font-size: 11px;
-}
-
-.fPass{
-    font-size: 15px;
-}
-
-a{
-    color: black;
-    font-size: 11px;
-}
-
-.askbros-button button{
-    height: 25px;
-    width: 180px;
-    background-color: rgb(151, 56, 3);
-    border-radius: 5px;
+.question-date {
     font-size: 12px;
-    color: rgb(255, 121, 73);
-    border: none;
+    color: var(--muted);
+}
+
+.question-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.no-questions {
     text-align: center;
+    color: var(--muted);
+    font-size: 16px;
+    padding: 40px 0;
 }
 
-.nav-objects{
-    /*border: 3px solid rgb(175, 47, 0);*/
-    padding: 3px 15px 3px 15px;
-    border-radius: 5px;
-    /*background-color: rgba(255, 174, 145, 0.32);*/
-    transition: 0.7s;
+.question-card-link {
+    text-decoration: none;
+    display: block;
 }
 
-.nav-objects:hover{
-    background-color: rgba(227, 119, 66, 0.47);
-    /*border: 3px solid rgb(175, 47, 0);*/
-    letter-spacing: 1px;
-
+.question-card:hover {
+    border-color: var(--accent2);
+    cursor: pointer;
 }
