@@ -1,36 +1,30 @@
 <!doctype html>
-<html lang=!>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles/askbros.css">
-    <title>Login</title>
+    <link rel="stylesheet" href="/styles/askbros.css">
+    <title>AskBros</title>
 </head>
 <body>
-
 <header>
     <nav>
         <div class="main-logo">
             <p><a href="/"><span class="bro">Falcon</span><span class="codes">Flow</span></a></p>
         </div>
         <div class="nav-bar">
-            <div class="nav-objects">
-                <a href="/ask_bros">ASKBROS</a>
-            </div>
-            <div class="nav-objects">
-                <a href="/help_bros">HELPBROS</a>
-            </div>
+            <div class="nav-objects"><a href="/ask_bros">ASKBROS</a></div>
+            <div class="nav-objects"><a href="/help_bros">HELPBROS</a></div>
             <div class="input-search">
                 <input type="text" class="search-bar" placeholder="Search">
             </div>
-            <div class="logout">
-                <a href="/">LOGOUT</a>
-            </div>
+            <button class="dark-toggle" onclick="toggleDark()" id="toggleBtn">🌙 Dark</button>
+            <div class="logout"><a href="/">LOGOUT</a></div>
         </div>
     </nav>
 </header>
+
 <div class="askbrosForm">
     <form method="POST" action="/ask-question" id="bros-form">
         <div class="form-container">
@@ -38,16 +32,45 @@
                 <h1>AskBros</h1>
             </div>
             <div class="askbros-input">
-<!--                <input type="text">-->
-                <textarea name="ask_question"></textarea>
+                <textarea name="ask_question" placeholder="Ask your question..."></textarea>
             </div>
             <div class="askbros-button">
                 <button type="submit">POST</button>
             </div>
         </div>
-
     </form>
 </div>
 
+<div class="questions-feed">
+    <p class="feed-label">Recent Questions</p>
+    <% if (questions.length === 0) { %>
+        <p class="no-questions">No questions yet. Be the first to ask!</p>
+    <% } else { %>
+        <% questions.forEach(function(q) { %>
+            <a href="/question/<%= q._id %>" class="question-card-link">
+                <div class="question-card">
+                    <p class="question-text"><%= q.askedquestions %></p>
+                    <div class="question-meta">
+                        <span class="question-date"><%= q.createdAt.toDateString() %></span>
+                        <span class="question-tag">question</span>
+                    </div>
+                </div>
+            </a>
+        <% }) %>
+    <% } %>
+</div>
+
+<script>
+    function toggleDark() {
+        document.body.classList.toggle('dark');
+        const btn = document.getElementById('toggleBtn');
+        btn.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+        localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+        document.getElementById('toggleBtn').textContent = '☀️ Light';
+    }
+</script>
 </body>
 </html>
