@@ -107,22 +107,3 @@ a {
     color: black;
     font-size: 11px;
 }
-
-/* --- RESPONSIVE SECTION --- */
-
-@media (max-width: 768px) {
-    header {
-        padding: 30px 0 0 30px; /* Reduces the large left indent on mobile */
-        justify-content: center; /* Centers logo/nav on small screens */
-    }
-
-    #login-form {
-        padding: 30px 20px; /* Smaller padding inside the form */
-        width: 90%; /* Form occupies most of the screen width */
-        height: auto; /* Allow height to adjust to content */
-    }
-
-    .fPass {
-        font-size: 13px; /* Slightly smaller text for mobile */
-    }
-}
