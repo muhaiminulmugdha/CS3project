@@ -1,66 +1,68 @@
 @import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg-start: rgba(227, 236, 142, 1);
+    --bg-end: rgba(215, 84, 44, 1);
+    --text: rgba(186, 0, 0, 0.8);
+    --muted: #973803;
 }
 
-nav{
-    font-family: "Slackey", serif;
+body.dark {
+    --bg-start: #1a1a1a;
+    --bg-end: #2d1a0e;
+    --text: #f0a070;
+    --muted: #D75F33;
 }
 
-nav p a{
-    text-decoration: none;
-    font-size: 16px;
+body {
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(180deg, var(--bg-start) 10%, var(--bg-end) 90%);
+    min-height: 100vh;
+    transition: background 0.3s;
 }
 
-.bro{
-    color: #973803;
-}
-
-
-.main-logo{
-    font-size: 50px;
-}
-
-
-.bro{
-    color: #973803;
-}
-
-.codes{
-    color: #D75F33;
-}
-
-body{
-    background: rgb(227, 236, 142);
-    background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
-    backdrop-filter: blur(100px);
-    height: 100vh;
-}
-
-
-header{
+header {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    padding: 50px 0 0 100px;
+    padding: 30px 40px 0;
 }
 
-.desc-container{
+nav { font-family: "Slackey", serif; }
+nav p a { text-decoration: none; font-size: clamp(20px, 5vw, 35px); }
+.bro { color: #973803; }
+.codes { color: #D75F33; }
+
+.dark-toggle {
+    background: rgba(255,255,255,0.15);
+    border: 0.5px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #973803;
+    font-family: "Inter", sans-serif;
+}
+
+body.dark .dark-toggle { color: #f0a070; }
+
+.desc-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+    min-height: 70vh;
+    padding: 20px;
 }
 
-.description{
-    font-size: 1.3vw;
+.description {
     font-family: "Sofia Sans", serif;
-    color: rgba(186, 0, 0, 0.64);
+    color: var(--text);
+    font-size: clamp(16px, 1.3vw, 24px);
+    text-align: center;
+    max-width: 800px;
+    line-height: 1.6;
 }
-
-
-
