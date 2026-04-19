@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/question.css">
+    <title>Edit Question</title>
+</head>
+<body>
+<header>
+    <nav>
+        <div class="main-logo">
+            <p><a href="/"><span class="bro">Falcon</span><span class="codes">Flow</span></a></p>
+        </div>
+        <div class="nav-search">
+            <input type="text" class="search-bar" placeholder="Search questions...">
+        </div>
+        <div class="nav-bar">
+            <div class="nav-objects"><a href="/ask_bros">ASKBROS</a></div>
+            <div class="nav-objects"><a href="/help_bros">HELPBROS</a></div>
+            <button class="dark-toggle" onclick="toggleDark()" id="toggleBtn">🌙 Dark</button>
+            <a href="/account" class="account-btn">👤 <%= user.username %></a>
+            <% if (user.role === 'teacher') { %>
+                <a href="/dashboard" class="dashboard-btn">📊 Dashboard</a>
+            <% } %>
+            <div class="logout"><a href="/">LOGOUT</a></div>
+        </div>
+    </nav>
+</header>
+
+<div class="question-page">
+    <a href="/question/<%= question._id %>" class="back-btn">← Back to Question</a>
+
+    <div class="answer-form-box">
+        <p class="section-label">Edit Question</p>
+        <form method="POST" action="/question/<%= question._id %>/edit">
+            <textarea name="ask_question"><%= question.askedquestions %></textarea>
+            <button type="submit">SAVE CHANGES</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function toggleDark() {
+        document.body.classList.toggle('dark');
+        const btn = document.getElementById('toggleBtn');
+        btn.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+        localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+        document.getElementById('toggleBtn').textContent = '☀️ Light';
+    }
+</script>
+</body>
+</html>
