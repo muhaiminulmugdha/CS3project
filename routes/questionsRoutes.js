@@ -7,7 +7,14 @@ const requireLogin = require('../middleware/auth');
 router.get('/ask_bros', requireLogin, async (req, res) => {
     try {
         const questions = await Question.find().sort({ createdAt: -1 });
-        res.render('ask_bros', { questions, user: req.session.user });
+        
+        // Get answer count for each question
+        const questionsWithCounts = await Promise.all(questions.map(async (q) => {
+            const answerCount = await Answer.countDocuments({ questionId: q._id });
+            return { ...q.toObject(), answerCount };
+        }));
+
+        res.render('ask_bros', { questions: questionsWithCounts, user: req.session.user });
     } catch (err) {
         console.error(err);
         res.send('Error fetching questions');

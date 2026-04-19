@@ -267,3 +267,13 @@ nav {
 }
 
 .dashboard-btn:hover { opacity: 0.9; }
+
+.answer-count {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-weight: 500;
+}

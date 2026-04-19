@@ -4,27 +4,32 @@ A Q&A platform for high school CS students to ask and answer questions — like 
 
 ---
 
+## 🌐 Live Site
+https://falconflow-f30q.onrender.com
+
+---
+
 ## 🚀 Tech Stack
 
 - **Backend:** Node.js + Express
 - **Database:** MongoDB Atlas (cloud)
 - **View Engine:** EJS
 - **Auth:** bcryptjs + express-session
-- **Hosting:** Render (coming soon)
+- **Hosting:** Render (auto deploys from master branch)
 
 ---
 
 ## 📁 Project Structure
 
-```
 CS3project/
 ├── index.js
-├── package.json
-├── package-lock.json
-├── readme.md
-├── .gitignore
+├── .env
 ├── config/
-│   └── db.js
+│   ├── db.js
+│   └── devEmail.js
+├── middleware/
+│   ├── auth.js
+│   └── teacherOnly.js
 ├── models/
 │   ├── User.js
 │   ├── Question.js
@@ -32,7 +37,7 @@ CS3project/
 ├── routes/
 │   ├── questionsRoutes.js
 │   ├── feedRoute.js
-│   ├── commentsRoutes.js
+│   ├── teacherRoutes.js
 │   ├── routes.js
 │   └── users/
 │       └── userRoutes.js
@@ -42,53 +47,128 @@ CS3project/
 │   ├── login.ejs
 │   ├── signup.ejs
 │   ├── ask_bros.ejs
-│   ├── question.ejs
 │   ├── help_bros.ejs
+│   ├── question.ejs
+│   ├── edit_question.ejs
+│   ├── account.ejs
+│   ├── dashboard.ejs
 │   └── comment_here.ejs
 └── public/
     └── styles/
         ├── askbros.css
         ├── question.css
+        ├── helpbros.css
         ├── login.css
         ├── signup.css
+        ├── account.css
+        ├── dashboard.css
         ├── index.css
-        ├── about.css
-        └── helpbros.css
-```
----
-
-## ✅ Completed (April 18, 2026)
-
-- Switched from MySQL to MongoDB Atlas (cloud database)
-- Connected MongoDB using Mongoose
-- Questions can be posted and displayed on AskBros page
-- Clicking a question opens a detail page (`/question/:id`)
-- Answers can be posted on the question detail page
-- Light/Dark mode toggle on AskBros and Question pages
-- Login page with error message display
-- Signup route with password hashing (bcryptjs)
-- Fixed CSS loading issues (added `/` to stylesheet paths)
-- Removed duplicate Question model definition
-- Session setup with express-session
+        └── about.css
 
 ---
 
+## ✅ Features Completed
+
+### Auth
+- Signup with duplicate email and username check
+- Login with bcrypt password hashing
+- Session-based authentication
+- Protected routes (login required)
+- Banned user detection on login
+
+### Questions
+- Post questions (logged in users only)
+- View all questions (AskBros page)
+- View question detail with answers
+- Edit your own question
+- Delete your own question
+- Live search on AskBros and HelpBros pages
+- Username shown on each question
+
+### Answers
+- Post answers on question detail page
+- Username shown on each answer
+
+### HelpBros Page
+- Stack Overflow style feed
+- Shows all questions with answer count
+- Ask Question button
+
+### Account Page
+- Change username
+- Change password
+
+### Teacher / Admin System
+- Email whitelist in `config/devEmail.js`
+- Teacher role assigned on signup automatically
+- Teacher dashboard at `/dashboard`
+- Dashboard shows: total users, questions, answers, banned users
+- Ban / unban any student
+- Promote student to teacher
+- Delete any question from dashboard
+
+### UI
+- Light / Dark mode toggle (saved in localStorage)
+- Search bar in center of nav (live search)
+- Responsive design
+- FalconFlow branding (Slackey + Inter fonts)
+
+### Full CRUD
+- ✅ Create — post questions and answers
+- ✅ Read — view questions and answers
+- ✅ Update — edit your own questions
+- ✅ Delete — delete your own questions
+
+---
+
+## 🚧 Still To Do
+
+
+- [ ] Delete answers from teacher dashboard
+- [ ] Style remaining pages (about, comment_here)
+- [ ] Answer edit feature
+- [ ] Notifications
+
+---
 
 ## 🏃 How to Run Locally
 
+```bash
 cd CS3project
 npm install
 npm run server
+```
 
 Open: http://localhost:3000
 
 ---
 
-## 🔐 Environment Variables (for deployment)
+## 🔐 Environment Variables
 
-When deploying to Render, add these:
-- `MONGODB_URI` — your MongoDB Atlas connection string
-- `SESSION_SECRET` — a secret string for sessions
+Create a `.env` file in the root:
+
+```
+MONGODB_URI=your_mongodb_connection_string
+SESSION_SECRET=your_secret_key
+```
+
+For Render deployment, add these in the Render dashboard under Environment Variables.
+
+---
+
+## 👩‍🏫 Teacher Access
+
+Add emails to `config/devEmail.js` to give teacher role on signup:
+
+```javascript
+const devEmails = [
+    'teacher@cpsd.us',
+    'admin@cpsd.us',
+];
+module.exports = devEmails;
+```
+
+Teachers can also promote students to teacher from the dashboard.
 
 ---
 
@@ -96,13 +176,39 @@ When deploying to Render, add these:
 
 - **Mugdho** — branch: `mugdho`
 - **Muhtasim** — branch: `muhtasim`
-- **Ahnaf** — branch: `ahnaf`
+- **[Third friend]** — branch: TBD
 
 ---
 
 ## 🌿 Git Workflow
 
-1. Pull latest from `master`
-2. Work on your own branch
-3. Push changes
-4. Create Pull Request → `master`
+```bash
+# Work on your branch
+git checkout muhtasim
+
+# Make changes and test locally
+npm run server
+
+# Commit when done
+git add .
+git commit -m "feat: your feature description"
+git push origin muhtasim
+
+# Deploy to Render
+git checkout master
+git merge muhtasim
+git push origin master
+git checkout muhtasim
+```
+
+---
+
+## 🤝 Discord
+
+Team communication on Discord — channels:
+- `#general`
+- `#code-help`
+- `#bugs`
+- `#features`
+- `#git-updates`
+```
