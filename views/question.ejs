@@ -55,6 +55,20 @@
         <% } else { %>
             <% answers.forEach(function(a) { %>
                 <div class="answer-card">
+                    <div class="vote-section">
+                        <form method="POST" action="/answer/<%= a._id %>/vote" style="display:inline;">
+                            <input type="hidden" name="vote" value="up">
+                            <button type="submit" class="vote-btn upvote-btn <%= a.voters && a.voters.find(v => v.username === user.username && v.vote === 'up') ? 'voted' : '' %>">
+                                👍 <%= a.upvotes %>
+                            </button>
+                        </form>
+                        <form method="POST" action="/answer/<%= a._id %>/vote" style="display:inline;">
+                            <input type="hidden" name="vote" value="down">
+                            <button type="submit" class="vote-btn downvote-btn <%= a.voters && a.voters.find(v => v.username === user.username && v.vote === 'down') ? 'voted' : '' %>">
+                                👎 <%= a.downvotes %>
+                            </button>
+                        </form>
+                    </div>
                     <p class="answer-text"><%= a.answer %></p>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span class="answer-date"><%= a.createdAt.toDateString() %></span>
