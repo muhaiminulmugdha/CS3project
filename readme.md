@@ -1,6 +1,6 @@
 # FalconFlow 🦅
 
-A Q&A platform for high school CS students to ask and answer questions — like a mini Stack Overflow.
+A Q&A platform for high school CS students to ask and answer questions — like a mini Stack Overflow. Built for Cambridge Public Schools CS classes.
 
 ---
 
@@ -11,11 +11,14 @@ https://falconflow-f30q.onrender.com
 
 ## 🚀 Tech Stack
 
-- **Backend:** Node.js + Express
-- **Database:** MongoDB Atlas (cloud)
-- **View Engine:** EJS
-- **Auth:** bcryptjs + express-session
-- **Hosting:** Render (auto deploys from master branch)
+| Technology | Purpose |
+|---|---|
+| Node.js + Express | Backend server |
+| MongoDB Atlas | Cloud database |
+| EJS | HTML templating |
+| bcryptjs | Password hashing |
+| express-session | User sessions |
+| Render | Hosting + auto deploy |
 
 ---
 
@@ -23,36 +26,36 @@ https://falconflow-f30q.onrender.com
 
 ```
 CS3project/
-├── index.js
-├── .env
+├── index.js                    ← App entry point
+├── .env                        ← Environment variables (never push to GitHub)
 ├── config/
-│   ├── db.js
-│   └── devEmail.js
+│   ├── db.js                   ← MongoDB connection
+│   └── devEmail.js             ← Teacher email whitelist
 ├── middleware/
-│   ├── auth.js
-│   └── teacherOnly.js
+│   ├── auth.js                 ← Require login middleware
+│   └── teacherOnly.js          ← Require teacher role middleware
 ├── models/
-│   ├── User.js
-│   ├── Question.js
-│   └── Answer.js
+│   ├── User.js                 ← User schema (username, email, password, role, banned)
+│   ├── Question.js             ← Question schema (text, username, class, language, assessment)
+│   └── Answer.js               ← Answer schema (text, username, upvotes, downvotes, voters)
 ├── routes/
-│   ├── questionsRoutes.js
-│   ├── feedRoute.js
-│   ├── teacherRoutes.js
+│   ├── questionsRoutes.js      ← All question + answer routes
+│   ├── feedRoute.js            ← HelpBros feed route
+│   ├── teacherRoutes.js        ← Teacher dashboard routes
 │   └── users/
-│       └── userRoutes.js
+│       └── userRoutes.js       ← Auth + account routes
 ├── views/
-│   ├── index.ejs         
-│   ├── about.ejs          
-│   ├── login.ejs
-│   ├── signup.ejs
-│   ├── ask_bros.ejs
-│   ├── help_bros.ejs
-│   ├── question.ejs
-│   ├── edit_question.ejs
-│   ├── edit_answer.ejs
-│   ├── account.ejs
-│   └── dashboard.ejs
+│   ├── index.ejs               ← Landing page ← Ahnaf (needs styling)
+│   ├── about.ejs               ← About page ← Ahnaf (needs styling)
+│   ├── login.ejs               ← Login page
+│   ├── signup.ejs              ← Signup page
+│   ├── ask_bros.ejs            ← Main Q&A feed
+│   ├── help_bros.ejs           ← Stack Overflow style feed
+│   ├── question.ejs            ← Question detail + answers
+│   ├── edit_question.ejs       ← Edit question page
+│   ├── edit_answer.ejs         ← Edit answer page
+│   ├── account.ejs             ← Account settings page
+│   └── dashboard.ejs           ← Teacher dashboard
 └── public/
     └── styles/
         ├── askbros.css
@@ -62,326 +65,231 @@ CS3project/
         ├── signup.css
         ├── account.css
         ├── dashboard.css
-        ├── index.css      
-        └── about.css      
+        ├── index.css           ← Ahnaf (needs styling)
+        └── about.css           ← Ahnaf (needs styling)
 ```
 
 ---
 
-## ✅ Features Completed
+## ✅ Features
 
-### Auth
-- Signup with duplicate email and username check
-- Login with bcrypt password hashing
-- Session-based authentication
-- Protected routes (login required)
-- Proper logout (session destroyed)
-- Banned user detection on login
+### 🔐 Authentication
+- Sign up with username, email, password
+- Duplicate email and username check
+- Password hashing with bcryptjs
+- Login / Logout (session destroyed on logout)
+- Protected routes — must be logged in to access
+- Banned users redirected on login attempt
 
-### Questions
-- Post questions (logged in users only)
-- View all questions (AskBros page)
-- View question detail with answers
+### ❓ Questions
+- Post a question with:
+  - Question text
+  - Class (APCSP, CS2, IT2)
+  - Language (Python, JavaScript, HTML, CSS, Java, C++, Other)
+  - Assessment name (optional)
+- View all questions on AskBros page
+- Answer count shown on each question card
+- Class, language, assessment tags shown on cards
 - Edit your own question
-- Delete your own question
-- Live search on AskBros and HelpBros pages
-- Username and date shown on each question
-- Answer count on each question card
+- Delete your own question (and all its answers)
+- Live search — filters questions as you type
 
-### Answers
+### 💬 Answers
 - Post answers on question detail page
-- Edit your own answer
-- Delete your own answer
 - Upvote / downvote answers
 - Answers sorted by most upvotes
-- Username shown on each answer
+- Edit your own answer
+- Delete your own answer
+- Username and date shown on each answer
 
-### HelpBros Page
+### 📋 HelpBros Page
 - Stack Overflow style feed
 - Shows all questions with answer count
-- Ask Question button
+- Click any question to go answer it
+- Live search
 
-### Account Page
-- Change username
-- Change password
+### 👤 Account Page
+- Change your username
+- Change your password
 
-### Teacher / Admin System
-- Email whitelist in `config/devEmail.js`
-- Teacher role assigned on signup automatically
-- Teacher dashboard at `/dashboard`
-- Dashboard stats: total users, questions, answers, banned users
-- Ban / unban any student
-- Promote student to teacher
-- Delete any question from dashboard
-- Delete any answer from dashboard
+### 👩‍🏫 Teacher / Admin System
+- Emails in `config/devEmail.js` automatically get teacher role on signup
+- Teachers can also be promoted from the dashboard
+- Teacher dashboard at `/dashboard` shows:
+  - Total users, questions, answers, banned users stats
+  - Full user list with roles and status
+  - Ban / unban any student
+  - Promote student to teacher
+  - Delete any question
+  - Delete any answer
 
-### UI
-- Light / Dark mode toggle (saved in localStorage)
-- Search bar in center of nav (live search)
+### 🎨 UI
+- Light / Dark mode toggle (preference saved in localStorage)
+- Search bar in center of nav
 - FalconFlow branding (Slackey + Inter fonts)
-- index.ejs and about.ejs styling → assigned to Ahnaf
+- Orange/warm color scheme
 
-### Full CRUD
-- ✅ Create — post questions and answers
-- ✅ Read — view questions and answers
-- ✅ Update — edit your own questions and answers
-- ✅ Delete — delete your own questions and answers
-
----
-
-## 🚧 Still To Do
-
-- [ ] Style index.ejs (Ahnaf)
-- [ ] Style about.ejs (Ahnaf)
+### ✅ Full CRUD
+| Operation | Questions | Answers |
+|---|---|---|
+| Create | ✅ Post question | ✅ Post answer |
+| Read | ✅ View all questions | ✅ View all answers |
+| Update | ✅ Edit your question | ✅ Edit your answer |
+| Delete | ✅ Delete your question | ✅ Delete your answer |
 
 ---
 
 ## 🏃 How to Run Locally
 
+### Prerequisites
+- Node.js installed
+- Git installed
+
+### Steps
+
+**1. Clone the repo:**
 ```bash
+git clone https://github.com/muhaiminulmugdha/CS3project.git
 cd CS3project
+```
+
+**2. Install dependencies:**
+```bash
 npm install
+```
+
+**3. Create a `.env` file** in the root of the project:
+```
+MONGODB_URI=your_mongodb_connection_string
+SESSION_SECRET=falconflow_secret_2026
+```
+
+> Ask Muhtasim on Discord for the MongoDB URI
+
+**4. Start the server:**
+```bash
 npm run server
 ```
 
-Open: http://localhost:3000
+**5. Open in browser:**
+```
+http://localhost:3000
+```
 
 ---
 
 ## 🔐 Environment Variables
 
-Create a `.env` file in the root:
+| Variable | Description |
+|---|---|
+| `MONGODB_URI` | MongoDB Atlas connection string |
+| `SESSION_SECRET` | Secret key for session encryption |
 
-```
-MONGODB_URI=your_mongodb_connection_string
-SESSION_SECRET=your_secret_key
-```
-
-For Render deployment, add these in the Render dashboard under Environment Variables.
+For Render deployment, add these in **Render Dashboard → Environment Variables**.
 
 ---
 
 ## 👩‍🏫 Teacher Access
 
-Add emails to `config/devEmail.js` to give teacher role on signup:
+To give someone teacher access, add their email to `config/devEmail.js`:
 
 ```javascript
 const devEmails = [
     'teacher@cpsd.us',
     'admin@cpsd.us',
+    // Add more teacher emails here
 ];
+
 module.exports = devEmails;
 ```
 
-Teachers can also promote students to teacher from the dashboard.
-
----
-
-## 👥 Team
-
-- **Mugdho** — branch: `mugdho`
-- **Muhtasim** — branch: `muhtasim`
-- **Ahnaf** — branch: TBD (assigned: style index + about pages)
+When they sign up with that email, they automatically get the teacher role.
+Teachers can also be promoted by an existing teacher from the `/dashboard` page.
 
 ---
 
 ## 🌿 Git Workflow
 
-```bash
-# Work on your branch
-git checkout muhtasim
+Each team member works on their own branch and merges to master to deploy.
 
-# Make changes and test locally
+```bash
+# 1. Switch to your branch
+git checkout muhtasim   # or mugdho or ahnaf
+
+# 2. Make changes and test locally
 npm run server
 
-# Commit when done
+# 3. Commit your changes
 git add .
-git commit -m "feat: your feature description"
+git commit -m "feat: describe what you built"
 git push origin muhtasim
 
-# Deploy to Render
+# 4. Deploy to Render (merge to master)
 git checkout master
+git pull origin master
 git merge muhtasim
 git push origin master
+
+# 5. Go back to your branch
 git checkout muhtasim
 ```
 
----
-
-## 🤝 Discord
-
-Team communication on Discord — channels:
-- `#general`
-- `#code-help`
-- `#bugs`
-- `#features`
-- `#git-updates`│   └── Answer.js
-├── routes/
-│   ├── questionsRoutes.js
-│   ├── feedRoute.js
-│   ├── teacherRoutes.js
-│   ├── routes.js
-│   └── users/
-│       └── userRoutes.js
-├── views/
-│   ├── index.ejs
-│   ├── about.ejs
-│   ├── login.ejs
-│   ├── signup.ejs
-│   ├── ask_bros.ejs
-│   ├── help_bros.ejs
-│   ├── question.ejs
-│   ├── edit_question.ejs
-│   ├── account.ejs
-│   ├── dashboard.ejs
-│   └── comment_here.ejs
-└── public/
-    └── styles/
-        ├── askbros.css
-        ├── question.css
-        ├── helpbros.css
-        ├── login.css
-        ├── signup.css
-        ├── account.css
-        ├── dashboard.css
-        ├── index.css
-        └── about.css
+> Render automatically redeploys when master is updated — wait ~2 minutes after pushing
 
 ---
 
-## ✅ Features Completed
+## 🌐 Routes Reference
 
-### Auth
-- Signup with duplicate email and username check
-- Login with bcrypt password hashing
-- Session-based authentication
-- Protected routes (login required)
-- Banned user detection on login
-
-### Questions
-- Post questions (logged in users only)
-- View all questions (AskBros page)
-- View question detail with answers
-- Edit your own question
-- Delete your own question
-- Live search on AskBros and HelpBros pages
-- Username shown on each question
-
-### Answers
-- Post answers on question detail page
-- Username shown on each answer
-
-### HelpBros Page
-- Stack Overflow style feed
-- Shows all questions with answer count
-- Ask Question button
-
-### Account Page
-- Change username
-- Change password
-
-### Teacher / Admin System
-- Email whitelist in `config/devEmail.js`
-- Teacher role assigned on signup automatically
-- Teacher dashboard at `/dashboard`
-- Dashboard shows: total users, questions, answers, banned users
-- Ban / unban any student
-- Promote student to teacher
-- Delete any question from dashboard
-
-### UI
-- Light / Dark mode toggle (saved in localStorage)
-- Search bar in center of nav (live search)
-- Responsive design
-- FalconFlow branding (Slackey + Inter fonts)
-
-### Full CRUD
-- ✅ Create — post questions and answers
-- ✅ Read — view questions and answers
-- ✅ Update — edit your own questions
-- ✅ Delete — delete your own questions
-
----
-
-
-## 🏃 How to Run Locally
-
-```bash
-cd CS3project
-npm install
-npm run server
-```
-
-Open: http://localhost:3000
-
----
-
-## 🔐 Environment Variables
-
-Create a `.env` file in the root:
-
-```
-MONGODB_URI=your_mongodb_connection_string
-SESSION_SECRET=your_secret_key
-```
-
-For Render deployment, add these in the Render dashboard under Environment Variables.
-
----
-
-## 👩‍🏫 Teacher Access
-
-Add emails to `config/devEmail.js` to give teacher role on signup:
-
-```javascript
-const devEmails = [
-    'teacher@cpsd.us',
-    'admin@cpsd.us',
-];
-module.exports = devEmails;
-```
-
-Teachers can also promote students to teacher from the dashboard.
+| Method | Route | Description | Auth |
+|---|---|---|---|
+| GET | `/` | Landing page | Public |
+| GET | `/login` | Login page | Public |
+| POST | `/api/v1/users/login` | Login action | Public |
+| GET | `/signup` | Signup page | Public |
+| POST | `/api/v1/users/signup` | Signup action | Public |
+| GET | `/logout` | Logout | Login required |
+| GET | `/ask_bros` | Main Q&A feed | Login required |
+| POST | `/ask-question` | Post a question | Login required |
+| GET | `/question/:id` | Question detail | Login required |
+| POST | `/question/:id/answer` | Post an answer | Login required |
+| GET | `/question/:id/edit` | Edit question page | Owner/Teacher |
+| POST | `/question/:id/edit` | Save question edit | Owner/Teacher |
+| POST | `/question/:id/delete` | Delete question | Owner/Teacher |
+| GET | `/answer/:id/edit` | Edit answer page | Owner/Teacher |
+| POST | `/answer/:id/edit` | Save answer edit | Owner/Teacher |
+| POST | `/answer/:id/delete` | Delete answer | Owner/Teacher |
+| POST | `/answer/:id/vote` | Upvote/downvote | Login required |
+| GET | `/help_bros` | HelpBros feed | Login required |
+| GET | `/account` | Account settings | Login required |
+| POST | `/account/username` | Change username | Login required |
+| POST | `/account/password` | Change password | Login required |
+| GET | `/dashboard` | Teacher dashboard | Teacher only |
+| POST | `/dashboard/ban/:id` | Ban/unban user | Teacher only |
+| POST | `/dashboard/promote/:id` | Promote to teacher | Teacher only |
+| POST | `/dashboard/question/:id/delete` | Delete any question | Teacher only |
+| POST | `/dashboard/answer/:id/delete` | Delete any answer | Teacher only |
 
 ---
 
 ## 👥 Team
 
-- **Mugdho** — branch: `mugdho`
-- **Muhtasim** — branch: `muhtasim`
-- **[Third friend]** — branch: TBD
+| Name | Branch | Assigned |
+|---|---|---|
+| Mugdho | `mugdho` | TBD |
+| Muhtasim | `muhtasim` | Backend + Features |
+| Ahnaf | TBD | Style index.ejs + about.ejs |
 
 ---
 
-## 🌿 Git Workflow
-
-```bash
-# Work on your branch
-git checkout muhtasim
-
-# Make changes and test locally
-npm run server
-
-# Commit when done
-git add .
-git commit -m "feat: your feature description"
-git push origin muhtasim
-
-# Deploy to Render
-git checkout master
-git merge muhtasim
-git push origin master
-git checkout muhtasim
-```
-
----
 
 ## 🤝 Discord
 
-Team communication on Discord — channels:
-- `#general`
-- `#code-help`
-- `#bugs`
-- `#features`
-- `#git-updates`
-```
+Team communication on Discord:
+
+| Channel | Purpose |
+|---|---|
+| `#general` | General chat |
+| `#code-help` | Ask for coding help |
+| `#bugs` | Report bugs |
+| `#features` | Feature ideas |
+| `#git-updates` | Paste commit messages |
