@@ -109,4 +109,42 @@ router.post('/answer/:id/vote', requireLogin, async (req, res) => {
     }
 });
 
+// Get edit page
+router.get('/question/:id/edit', requireLogin, async (req, res) => {
+    try {
+        const question = await Question.findById(req.params.id);
+
+        // Only owner or teacher can edit
+        if (question.username !== req.session.user.username && req.session.user.role !== 'teacher') {
+            return res.status(403).send('You can only edit your own questions');
+        }
+
+        res.render('edit_question', { question, user: req.session.user });
+    } catch (err) {
+        console.error(err);
+        res.send('Error loading edit page');
+    }
+});
+
+// Submit edit
+router.post('/question/:id/edit', requireLogin, async (req, res) => {
+    try {
+        const question = await Question.findById(req.params.id);
+
+        // Only owner or teacher can edit
+        if (question.username !== req.session.user.username && req.session.user.role !== 'teacher') {
+            return res.status(403).send('You can only edit your own questions');
+        }
+
+        await Question.findByIdAndUpdate(req.params.id, { 
+            askedquestions: req.body.ask_question 
+        });
+
+        res.redirect(`/question/${req.params.id}`);
+    } catch (err) {
+        console.error(err);
+        res.send('Error updating question');
+    }
+});
+
 module.exports = router;
