@@ -22,7 +22,10 @@ router.post('/ask-question', requireLogin, async (req, res) => {
     try {
         const newQuestion = new Question({ 
             askedquestions: req.body.ask_question,
-            username: req.session.user.username
+            username: req.session.user.username,
+            class: req.body.class,
+            language: req.body.language,
+            assessment: req.body.assessment
         });
         await newQuestion.save();
         res.redirect('/ask_bros');

@@ -35,6 +35,11 @@
 
     <div class="question-box">
         <p class="question-text"><%= question.askedquestions %></p>
+        <div class="question-tags" style="margin: 8px 0;">
+            <% if (question.class) { %><span class="tag class-tag"><%= question.class %></span><% } %>
+            <% if (question.language) { %><span class="tag lang-tag"><%= question.language %></span><% } %>
+            <% if (question.assessment) { %><span class="tag assessment-tag">📝 <%= question.assessment %></span><% } %>
+        </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
             <span class="question-date"><%= question.createdAt.toDateString() %></span>
             <div style="display: flex; align-items: center; gap: 12px;">

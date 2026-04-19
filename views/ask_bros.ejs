@@ -38,6 +38,25 @@
             <div class="askbros-input">
                 <textarea name="ask_question" placeholder="Ask your question..."></textarea>
             </div>
+            <div class="askbros-selects">
+                <select name="class">
+                    <option value="">Select Class</option>
+                    <option value="APCSP">APCSP</option>
+                    <option value="CS2">CS2</option>
+                    <option value="IT2">IT2</option>
+                </select>
+                <select name="language">
+                    <option value="">Select Language</option>
+                    <option value="Python">Python</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="HTML">HTML</option>
+                    <option value="CSS">CSS</option>
+                    <option value="Java">Java</option>
+                    <option value="C++">C++</option>
+                    <option value="Other">Other</option>
+                </select>
+                <input type="text" name="assessment" placeholder="Assessment name (optional)" class="assessment-input"/>
+            </div>
             <div class="askbros-button">
                 <button type="submit">POST</button>
             </div>
@@ -54,11 +73,15 @@
             <a href="/question/<%= q._id %>" class="question-card-link">
                 <div class="question-card">
                     <p class="question-text"><%= q.askedquestions %></p>
+                    <div class="question-tags">
+                        <% if (q.class) { %><span class="tag class-tag"><%= q.class %></span><% } %>
+                        <% if (q.language) { %><span class="tag lang-tag"><%= q.language %></span><% } %>
+                        <% if (q.assessment) { %><span class="tag assessment-tag">📝 <%= q.assessment %></span><% } %>
+                    </div>
                     <div class="question-meta">
                         <span class="question-date"><%= q.createdAt.toDateString() %></span>
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span class="answer-count"><%= q.answerCount %> answer<%= q.answerCount !== 1 ? 's' : '' %></span>
-                            <span class="question-tag">question</span>
                             <span class="question-user">👤 <%= q.username %></span>
                         </div>
                     </div>

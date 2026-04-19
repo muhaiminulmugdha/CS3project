@@ -277,3 +277,79 @@ nav {
     padding: 3px 10px;
     font-weight: 500;
 }
+
+.askbros-selects {
+    display: flex;
+    gap: 10px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+}
+
+.askbros-selects select {
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    font-family: "Inter", sans-serif;
+    cursor: pointer;
+    flex: 1;
+}
+
+.assessment-input {
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    font-family: "Inter", sans-serif;
+    flex: 1;
+}
+
+.question-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 6px 0;
+}
+
+.tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.class-tag {
+    background: #e6f0fd;
+    color: #1857a4;
+}
+
+.lang-tag {
+    background: #fdeee6;
+    color: #973803;
+}
+
+.assessment-tag {
+    background: #f0f7e6;
+    color: #3a6b10;
+}
+
+body.dark .class-tag {
+    background: #0c2a4a;
+    color: #7ab3f0;
+}
+
+body.dark .lang-tag {
+    background: #3a1f0f;
+    color: #f0a070;
+}
+
+body.dark .assessment-tag {
+    background: #1a2f0a;
+    color: #a0d060;
+}
