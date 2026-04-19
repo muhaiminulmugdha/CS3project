@@ -38,6 +38,17 @@ router.post('/dashboard/ban/:id', requireLogin, teacherOnly, async (req, res) =>
     }
 });
 
+// Promote student to teacher
+router.post('/dashboard/promote/:id', requireLogin, teacherOnly, async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(req.params.id, { role: 'teacher' });
+        res.redirect('/dashboard');
+    } catch (err) {
+        console.error(err);
+        res.send('Error promoting user');
+    }
+});
+
 // Delete any question
 router.post('/dashboard/question/:id/delete', requireLogin, teacherOnly, async (req, res) => {
     try {
