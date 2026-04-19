@@ -261,3 +261,35 @@ nav {
 }
 
 .dashboard-btn:hover { opacity: 0.9; }
+
+.vote-section {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.vote-btn {
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    color: var(--text);
+    transition: all 0.2s;
+}
+
+.vote-btn:hover { border-color: var(--accent2); }
+
+.upvote-btn.voted {
+    background: rgba(0, 150, 0, 0.15);
+    border-color: rgba(0, 150, 0, 0.4);
+    color: #2d7a2d;
+}
+
+.downvote-btn.voted {
+    background: rgba(255, 0, 0, 0.15);
+    border-color: rgba(255, 0, 0, 0.4);
+    color: #c0392b;
+}

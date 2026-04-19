@@ -31,7 +31,8 @@ router.post('/ask-question', requireLogin, async (req, res) => {
 router.get('/question/:id', requireLogin, async (req, res) => {
     try {
         const question = await Question.findById(req.params.id);
-        const answers = await Answer.find({ questionId: req.params.id }).sort({ createdAt: 1 });
+        const answers = await Answer.find({ questionId: req.params.id })
+            .sort({ upvotes: -1, createdAt: 1 });
         res.render('question', { question, answers, user: req.session.user });
     } catch (err) {
         console.error(err);
@@ -69,6 +70,42 @@ router.post('/question/:id/delete', requireLogin, async (req, res) => {
     } catch (err) {
         console.error(err);
         res.send('Error deleting question');
+    }
+});
+
+router.post('/answer/:id/vote', requireLogin, async (req, res) => {
+    try {
+        const { vote } = req.body; // 'up' or 'down'
+        const username = req.session.user.username;
+        const answer = await Answer.findById(req.params.id);
+
+        // Check if user already voted
+        const existingVote = answer.voters.find(v => v.username === username);
+
+        if (existingVote) {
+            if (existingVote.vote === vote) {
+                // Remove vote if clicking same button
+                answer.voters = answer.voters.filter(v => v.username !== username);
+                if (vote === 'up') answer.upvotes--;
+                else answer.downvotes--;
+            } else {
+                // Change vote
+                existingVote.vote = vote;
+                if (vote === 'up') { answer.upvotes++; answer.downvotes--; }
+                else { answer.downvotes++; answer.upvotes--; }
+            }
+        } else {
+            // New vote
+            answer.voters.push({ username, vote });
+            if (vote === 'up') answer.upvotes++;
+            else answer.downvotes++;
+        }
+
+        await answer.save();
+        res.redirect(`/question/${answer.questionId}`);
+    } catch (err) {
+        console.error(err);
+        res.send('Error voting');
     }
 });
 
