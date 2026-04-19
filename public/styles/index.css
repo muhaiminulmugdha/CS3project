@@ -1,104 +1,114 @@
 @import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg-start: rgba(227, 236, 142, 1);
+    --bg-end: rgba(215, 84, 44, 1);
+    --text: #973803;
+    --btn-bg: #973803;
+    --btn-text: #fff;
 }
 
-nav{
+body.dark {
+    --bg-start: #1a1a1a;
+    --bg-end: #2d1a0e;
+    --text: #f0a070;
+    --btn-bg: #D75F33;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(180deg, var(--bg-start) 10%, var(--bg-end) 90%);
+    min-height: 100vh;
+    transition: background 0.3s;
+}
+
+nav { font-family: "Slackey", serif; }
+.bro { color: #973803; }
+.codes { color: #D75F33; }
+
+.login-top-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 40px;
+}
+
+.login-top-right a {
+    color: #973803;
     font-family: "Slackey", serif;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 16px;
 }
 
-.containerForMidSection{
+.login-top-right a:hover { color: #D75F33; letter-spacing: 1px; }
+
+.dark-toggle {
+    background: rgba(255,255,255,0.15);
+    border: 0.5px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #973803;
+    font-family: "Inter", sans-serif;
+}
+
+body.dark .dark-toggle { color: #f0a070; }
+
+.containerForMidSection {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 60vh;
+    min-height: 70vh;
+    padding: 20px;
+    text-align: center;
 }
 
-.main-logo{
-    font-size: 50px;
+.main-logo {
+    font-size: clamp(30px, 8vw, 50px);
+    font-family: "Slackey", serif;
 }
 
-
-.middle-section{
+.middle-section {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 30px;
-    margin-top: 100px;
-}
-
-.bro{
-    color: #973803;
-}
-
-.codes{
-    color: #D75F33;
-}
-
-body{
-    background: rgb(227, 236, 142);
-    background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
-    backdrop-filter: blur(100px);
-    height: 100vh;
-}
-
-a{
-    font-family: "Inter", serif;
-    text-decoration: none;
-    font-size: 20px;
-    text-transform: uppercase;
-}
-
-.login-top-right{
-   display: flex;
-    align-content: space-between;
-    justify-content: space-between;
-    padding: 70px;
-
-}
-
-.login-top-right a{
-    color: #973803;
-    font-family: "Slackey", serif;
-    transition: 0.6s;
-}
-
-.login-top-right a:hover{
-    color: #D75F33;
-    letter-spacing: 1px;
-}
-
-
-.signup{
-    display: inline-block;
-    height: 25px;
-    background-color: #973803;
-    padding: 10px 30px 10px 30px;
-    border-radius: 10px;
-}
-
-.middle-section a{
-    font-size: 20px;
-    color: rgba(255, 121, 73, 0.75);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    font-weight: bold;
-    transition: 0.7s;
-}
-
-.signup:hover{
-    /*background-color: #D75F33;*/
-    transform: translateY(-5px);
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-}
-
-.cpsd-logo{
-    filter: drop-shadow(0 0 0.9rem red);
     margin-top: 50px;
 }
 
+a {
+    font-family: "Inter", sans-serif;
+    text-decoration: none;
+    font-size: 20px;
+}
 
+.signup {
+    display: inline-block;
+    background-color: var(--btn-bg);
+    padding: 12px 40px;
+    border-radius: 10px;
+    color: white !important;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.signup:hover {
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px;
+    opacity: 0.9;
+}
+
+.cpsd-logo {
+    filter: drop-shadow(0 0 0.9rem red);
+    margin-top: 50px;
+    max-width: 100%;
+    height: auto;
+}
