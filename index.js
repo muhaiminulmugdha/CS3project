@@ -7,6 +7,7 @@ const connectDB = require('./config/db');
 const questionRoutes = require('./routes/questionsRoutes');
 const userRoutes = require('./routes/users/userRoutes');
 const feedRoutes = require('./routes/feedRoute');
+const teacherRoutes = require('./routes/teacherRoutes');
 
 // Connect to MongoDB
 connectDB();
@@ -16,16 +17,18 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-// Session setup
+// Session setup — MUST be before routes
 app.use(session({
     secret: 'falconflow_secret',
     resave: false,
     saveUninitialized: false
 }));
 
+// Routes — AFTER session
 app.use("/", questionRoutes);
 app.use("/", userRoutes);
 app.use("/", feedRoutes);
+app.use("/", teacherRoutes);
 
 app.get('/', (req, res) => { res.render('index'); });
 app.get('/about', (req, res) => { res.render('about'); });
