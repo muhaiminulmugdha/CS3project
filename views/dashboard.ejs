@@ -57,7 +57,7 @@
                         <th>Role</th>
                         <th>Joined</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,11 +70,18 @@
                             <td><span class="status-badge <%= u.banned ? 'banned' : 'active' %>"><%= u.banned ? 'Banned' : 'Active' %></span></td>
                             <td>
                                 <% if (u.role !== 'teacher') { %>
-                                    <form method="POST" action="/dashboard/ban/<%= u._id %>">
-                                        <button type="submit" class="<%= u.banned ? 'unban-btn' : 'ban-btn' %>">
-                                            <%= u.banned ? 'Unban' : 'Ban' %>
-                                        </button>
-                                    </form>
+                                    <div style="display: flex; gap: 8px;">
+                                        <form method="POST" action="/dashboard/ban/<%= u._id %>">
+                                            <button type="submit" class="<%= u.banned ? 'unban-btn' : 'ban-btn' %>">
+                                                <%= u.banned ? 'Unban' : 'Ban' %>
+                                            </button>
+                                        </form>
+                                        <form method="POST" action="/dashboard/promote/<%= u._id %>" onsubmit="return confirm('Promote this user to teacher?')">
+                                            <button type="submit" class="promote-btn">⬆️ Promote</button>
+                                        </form>
+                                    </div>
+                                <% } else { %>
+                                    <span style="font-size: 12px; color: var(--muted);">Teacher</span>
                                 <% } %>
                             </td>
                         </tr>
