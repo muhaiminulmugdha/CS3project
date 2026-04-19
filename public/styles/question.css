@@ -249,3 +249,15 @@ nav {
 .delete-btn:hover {
     background: rgba(255, 0, 0, 0.2);
 }
+
+.dashboard-btn {
+    text-decoration: none;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--accent2);
+    border-radius: 20px;
+    padding: 6px 14px;
+}
+
+.dashboard-btn:hover { opacity: 0.9; }

@@ -168,3 +168,15 @@ nav {
 .question-info { font-size: 12px; color: var(--muted); }
 
 .no-questions { text-align: center; color: var(--muted); font-size: 16px; padding: 40px 0; }
+
+.dashboard-btn {
+    text-decoration: none;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--accent2);
+    border-radius: 20px;
+    padding: 6px 14px;
+}
+
+.dashboard-btn:hover { opacity: 0.9; }
