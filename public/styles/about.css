@@ -1,77 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
 
-* {
+*{
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Ensures padding doesn't break layout width */
 }
 
-body {
-    background: rgb(227, 236, 142);
-    background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
-    backdrop-filter: blur(100px);
-    min-height: 100vh; /* Changed from height to min-height for mobile scrolling */
-}
-
-nav {
+nav{
     font-family: "Slackey", serif;
 }
 
-nav p a {
+nav p a{
     text-decoration: none;
     font-size: 16px;
 }
 
-.main-logo {
-    /* Using clamp so it stays big on desktop but shrinks on mobile */
-    font-size: clamp(30px, 8vw, 50px); 
+.bro{
+    color: #973803;
 }
 
-.bro { color: #973803; }
-.codes { color: #D75F33; }
 
-header {
+.main-logo{
+    font-size: 50px;
+}
+
+
+.bro{
+    color: #973803;
+}
+
+.codes{
+    color: #D75F33;
+}
+
+body{
+    background: rgb(227, 236, 142);
+    background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
+    backdrop-filter: blur(100px);
+    height: 100vh;
+}
+
+
+header{
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    /* Changed fixed padding to a responsive percentage */
-    padding: 5vh 5% 0 5%; 
+    padding: 50px 0 0 100px;
 }
 
-.desc-container {
+.desc-container{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 70vh;
-    padding: 20px; /* Prevents text from touching screen edges */
+    height: 70vh;
 }
 
 .description {
     font-family: "Sofia Sans", serif;
     color: rgba(186, 0, 0, 0.64);
-    /* clamp(min, preferred, max) - ensures text is never smaller than 16px */
-    font-size: clamp(16px, 1.3vw, 24px); 
-    text-align: center;
-    max-width: 800px; /* Keeps lines from getting too long on wide screens */
 }
 
-/* --- RESPONSIVE ADJUSTMENTS --- */
 
-@media (max-width: 768px) {
-    header {
-        justify-content: center; /* Center logo on mobile */
-        padding-top: 30px;
-    }
 
-    .desc-container {
-        height: auto;
-        margin-top: 40px;
-    }
-
-    .description {
-        font-size: 18px; /* Fixed comfortable size for mobile */
-        line-height: 1.5;
-    }
-}

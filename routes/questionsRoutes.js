@@ -2,20 +2,24 @@ const express = require('express');
 const router = express.Router();
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
+const requireLogin = require('../middleware/auth');
 
-router.get('/ask_bros', async (req, res) => {
+router.get('/ask_bros', requireLogin, async (req, res) => {
     try {
         const questions = await Question.find().sort({ createdAt: -1 });
-        res.render('ask_bros', { questions });
+        res.render('ask_bros', { questions, user: req.session.user });
     } catch (err) {
         console.error(err);
         res.send('Error fetching questions');
     }
 });
 
-router.post('/ask-question', async (req, res) => {
+router.post('/ask-question', requireLogin, async (req, res) => {
     try {
-        const newQuestion = new Question({ askedquestions: req.body.ask_question });
+        const newQuestion = new Question({ 
+            askedquestions: req.body.ask_question,
+            username: req.session.user.username
+        });
         await newQuestion.save();
         res.redirect('/ask_bros');
     } catch (err) {
@@ -24,30 +28,47 @@ router.post('/ask-question', async (req, res) => {
     }
 });
 
-// Question detail page
-router.get('/question/:id', async (req, res) => {
+router.get('/question/:id', requireLogin, async (req, res) => {
     try {
         const question = await Question.findById(req.params.id);
         const answers = await Answer.find({ questionId: req.params.id }).sort({ createdAt: 1 });
-        res.render('question', { question, answers });
+        res.render('question', { question, answers, user: req.session.user });
     } catch (err) {
         console.error(err);
         res.send('Error fetching question');
     }
 });
 
-// Post an answer
-router.post('/question/:id/answer', async (req, res) => {
+router.post('/question/:id/answer', requireLogin, async (req, res) => {
     try {
         const newAnswer = new Answer({
             questionId: req.params.id,
-            answer: req.body.answer
+            answer: req.body.answer,
+            username: req.session.user.username
         });
         await newAnswer.save();
         res.redirect(`/question/${req.params.id}`);
     } catch (err) {
         console.error(err);
         res.send('Error saving answer');
+    }
+});
+
+router.post('/question/:id/delete', requireLogin, async (req, res) => {
+    try {
+        const question = await Question.findById(req.params.id);
+
+        // Allow if owner OR teacher
+        if (question.username !== req.session.user.username && req.session.user.role !== 'teacher') {
+            return res.status(403).send('You can only delete your own questions');
+        }
+
+        await Answer.deleteMany({ questionId: req.params.id });
+        await Question.findByIdAndDelete(req.params.id);
+        res.redirect('/ask_bros');
+    } catch (err) {
+        console.error(err);
+        res.send('Error deleting question');
     }
 });
 

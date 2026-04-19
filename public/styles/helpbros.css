@@ -1,161 +1,256 @@
 @import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-* {
+*{
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Crucial for responsive padding */
 }
 
-body {
-    background: rgb(227, 236, 142);
-    background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
-    backdrop-filter: blur(100px);
-    min-height: 100vh; /* Changed from height to min-height */
+body{
+    height: 100vh;
 }
 
-/* Navigation */
-nav {
+nav{
     font-family: "Slackey", serif;
     display: flex;
-    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    margin: 0px 0px 0px 0px;
+    padding: 5px 20px 5px 20px;
     border-bottom: 3px solid #973803;
+    /*background: linear-gradient(90deg, rgba(227, 236, 142,1) 10%, rgba(239, 105, 67, 0.5) 90%);*/
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-    background: rgba(227, 236, 142, 0.9); /* Slight opacity for clarity */
 }
 
 .nav-bar {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 30px; /* Reduced gap for better fit */
+    gap: 70px;
 }
 
-nav a {
+nav a{
     text-decoration: none;
     color: #973803;
     font-size: 15px;
 }
 
-.main-logo a {
-    font-size: clamp(20px, 5vw, 35px); /* Responsive logo size */
+nav p a{
+    text-decoration: none;
+    font-size: 16px;
 }
 
-/* Form Section */
-.askbrosForm {
+.main-logo{
+    /*padding: 50px 0 0 100px;*/
+    /*margin-top: 80px;*/
+}
+
+.main-logo a{
+    font-size: 35px;
+}
+
+
+.bro{
+    color: #973803;
+}
+
+.codes{
+    color: #D75F33;
+}
+
+body{
+    background: rgb(227, 236, 142);
+    background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
+    backdrop-filter: blur(100px);
+    height: 100vh;
+}
+
+
+.askbrosForm{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    min-height: 90vh;
+    height: 90vh;
     color: white;
     font-family: "Inter", serif;
-    padding: 20px;
 }
 
-#askbros-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+.search-bar{
+    height: 25px;
     width: 100%;
-    max-width: 550px; /* Instead of fixed 500px */
+    background-color: rgba(255, 255, 255, 0.37);
+    border: #E37742 solid 1px;
+    text-indent: 10px;
+    border-radius: 10px;
+}
+
+#askbros-form{
+    display: flex;
+    gap: 20px;
+    height: 350px;
+    width: 500px;
     background: rgba(255, 255, 255, 0.15);
-    padding: 40px 20px; /* Responsive padding */
+    padding: 50px;
     border-radius: 30px;
     border: 1px white solid;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
-.form-container {
-    width: 100%;
+.form-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
 }
 
-.form-container textarea {
-    width: 100%; /* Changed from 470px */
-    max-width: 470px;
+.form-container textarea{
+    width: 470px;
     height: 180px;
     background-color: rgba(255, 255, 255, 0.36);
     border-radius: 10px;
     border: #FFBD9C 1px solid;
     padding: 10px;
-    outline: none;
+    outline: #E37742 solid 2px;
     resize: none;
 }
 
-.form-container textarea:focus {
-    outline: #E37742 solid 2px;
-}
 
-/* Buttons and Links */
-#loginBtn {
+#loginBtn{
     width: 100%;
     background: #E37742;
+    /*border: none;*/
     height: 60px;
     color: white;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 11px;
+    font-size: 9px;
     letter-spacing: 1px;
     border-radius: 5px;
     border: 1px rgba(255, 255, 255, 0.45) solid;
-    cursor: pointer;
 }
 
-/* Comments and Sub-sections */
-.comments {
-    background-color: rgb(62, 0, 0);
-    width: 100%;
-    max-width: 300px; /* Prevent overflow */
-    padding: 15px;
-    border-radius: 10px;
-    margin: 10px auto;
+.linkToSignUp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
 }
 
-.make-a-comment a {
-    display: block;
-    width: 100%;
-    max-width: 400px;
-    padding: 10px 0; /* Removed huge horizontal padding */
+.fPass{
+    font-size: 15px;
+}
+
+a{
+    color: black;
+    font-size: 11px;
+}
+
+.askbros-button button{
+    height: 25px;
+    width: 180px;
+    background-color: rgb(151, 56, 3);
+    border-radius: 5px;
+    font-size: 12px;
+    color: rgb(255, 121, 73);
+    border: none;
     text-align: center;
+}
+
+.nav-objects{
+    padding: 3px 15px 3px 15px;
+    border-radius: 5px;
+    transition: 0.7s;
+}
+
+.nav-objects:hover{
+    background-color: rgb(227, 119, 66);
+    letter-spacing: 1px;
+}
+
+.avatar{
+    border-radius: 50px;
+    height: 35px;
+    width: 35px;
+}
+
+.credentials{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px 10px 10px;
+}
+
+.top-part{
+    background-color: rgb(110, 29, 0);
+    border: 8px solid rgba(62, 0, 0, 0.75);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 20px;
+}
+
+.username p{
+    font-size: 15px;
+}
+
+.asked-question{
+    padding: 10px 20px 10px 20px;
+    border-radius: 20px;
+    height: 70px;
+    overflow: scroll;
+    font-size: 9px;
+}
+.comments{
+    background-color: rgb(62, 0, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 250px;
+    height: 100px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.commented-user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    background-color: rgb(110, 29, 0);
+    padding: 5px 0px 5px 0px;
+    border-radius: 10px;
+}
+
+.commented-user img{
+    height: 25px;
+    width: 25px;
+}
+
+.sub-cmt-sec{
+    padding: 6px;
+    font-size: 13px;
+    overflow: scroll;
+    text-align: left;
+    background-color: rgb(110, 29, 0);
+    margin-top: 5px;
+    border-radius: 5px;
+    height: 100px;
+}
+
+.make-a-comment a{
+    text-decoration: none;
+    /*background-color: rgba(255, 255, 255, 0.65);*/
     background-color: rgb(110, 29, 0);
     border-radius: 10px;
+    height: 25px;
+    padding: 7px 150px 7px 150px;
+    width: 300px;
+    text-align: center;
     color: white;
     border: 5px solid rgba(62, 0, 0, 0.75);
-}
-
-/* --- MOBILE RESPONSIVENESS --- */
-
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column; /* Stack logo and nav items */
-        gap: 15px;
-        padding: 15px;
-    }
-
-    .nav-bar {
-        gap: 15px;
-        flex-wrap: wrap; /* Wraps items if they are too wide */
-        justify-content: center;
-    }
-
-    #askbros-form {
-        padding: 30px 15px;
-    }
-
-    .form-container textarea {
-        height: 120px; /* Shorter on small screens */
-    }
-
-    .make-a-comment a {
-        font-size: 14px;
-        padding: 10px 20px;
-    }
 }
