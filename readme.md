@@ -1,6 +1,3 @@
-Here's the updated `README.md`:
-
-```markdown
 # FalconFlow 🦅
 
 A Q&A platform for high school CS students to ask and answer questions — like a mini Stack Overflow.
@@ -126,8 +123,7 @@ CS3project/
 
 ## 🚧 Still To Do
 
-- [ ] Fix logout (clear session properly)
-- [ ] Answer count on AskBros question cards
+
 - [ ] Delete answers from teacher dashboard
 - [ ] Style remaining pages (about, comment_here)
 - [ ] Answer edit feature
