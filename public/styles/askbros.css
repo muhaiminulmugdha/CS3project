@@ -1,173 +1,145 @@
 @import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box; /* Crucial: padding won't increase element width */
 }
 
-body{
-    height: 100vh;
-}
-
-nav{
-    font-family: "Slackey", serif;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nav-bar{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 50px 0 0 100px;
-    gap: 70px;
-    margin-right: 100px;
-}
-
-nav a{
-    text-decoration: none;
-    color: #973803;
-    font-size: 15px;
-}
-
-
-nav p a{
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.main-logo{
-    padding: 50px 0 0 100px;
-}
-
-.main-logo a{
-    font-size: 35px;
-}
-
-
-.bro{
-    color: #973803;
-}
-
-.codes{
-    color: #D75F33;
-}
-
-body{
+body {
+    min-height: 100vh; /* Changed from height to min-height for scrolling */
     background: rgb(227, 236, 142);
     background: linear-gradient(180deg, rgba(227, 236, 142,1) 10%, rgba(215, 84, 44,1) 90%);
     backdrop-filter: blur(100px);
 }
 
-.askbrosForm{
+/* Navigation */
+nav {
+    font-family: "Slackey", serif;
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap on small screens */
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%; /* Relative padding */
+}
+
+.main-logo {
+    /* Removed fixed padding */
+}
+
+.main-logo a {
+    font-size: clamp(24px, 5vw, 35px); /* Scales font-size based on screen */
+    text-decoration: none;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px; /* Reduced gap for better mobile fit */
+}
+
+nav a {
+    text-decoration: none;
+    color: #973803;
+    font-size: 15px;
+}
+
+.nav-objects {
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: 0.7s;
+}
+
+.nav-objects:hover {
+    background-color: rgba(227, 119, 66, 0.47);
+    letter-spacing: 1px;
+}
+
+/* Form Container */
+.askbrosForm {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 91vh;
+    min-height: 80vh; 
     color: white;
     font-family: "Inter", serif;
+    padding: 20px; /* Space for mobile edges */
 }
 
-.search-bar{
-    height: 25px;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.37);
-    border: #E37742 solid 1px;
-    text-indent: 10px;
-    border-radius: 10px;
-}
-
-
-#askbros-form{
+#askbros-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    height: 300px;
-    width: 500px;
+    width: 100%;
+    max-width: 500px; /* Flexible width with a limit */
     background: rgba(255, 255, 255, 0.15);
-    padding: 50px;
+    padding: 40px 20px; 
     border-radius: 30px;
     border: 1px white solid;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
-.form-container{
+.form-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
 }
 
-.form-container textarea{
-    width: 470px;
+.form-container textarea {
+    width: 100%; /* Spans full container width */
     height: 180px;
     background-color: rgba(255, 255, 255, 0.36);
     border-radius: 10px;
     border: #FFBD9C 1px solid;
     padding: 10px;
-    outline: #E37742 solid 2px;
+    outline: none;
     resize: none;
 }
 
+.form-container textarea:focus {
+    outline: #E37742 solid 2px;
+}
 
-#loginBtn{
+#loginBtn {
     width: 100%;
     background: #E37742;
-    /*border: none;*/
     height: 60px;
     color: white;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 1px;
     border-radius: 5px;
     border: 1px rgba(255, 255, 255, 0.45) solid;
+    cursor: pointer;
 }
 
-.linkToSignUp{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-    font-size: 11px;
-}
+.bro { color: #973803; }
+.codes { color: #D75F33; }
 
-.fPass{
-    font-size: 15px;
-}
+/* --- RESPONSIVE ADJUSTMENTS --- */
 
-a{
-    color: black;
-    font-size: 11px;
-}
+@media (max-width: 768px) {
+    nav {
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+    }
 
-.askbros-button button{
-    height: 25px;
-    width: 180px;
-    background-color: rgb(151, 56, 3);
-    border-radius: 5px;
-    font-size: 12px;
-    color: rgb(255, 121, 73);
-    border: none;
-    text-align: center;
-}
+    .nav-bar {
+        margin-right: 0;
+        gap: 15px;
+        justify-content: center;
+    }
 
-.nav-objects{
-    /*border: 3px solid rgb(175, 47, 0);*/
-    padding: 3px 15px 3px 15px;
-    border-radius: 5px;
-    /*background-color: rgba(255, 174, 145, 0.32);*/
-    transition: 0.7s;
-}
-
-.nav-objects:hover{
-    background-color: rgba(227, 119, 66, 0.47);
-    /*border: 3px solid rgb(175, 47, 0);*/
-    letter-spacing: 1px;
-
+    #askbros-form {
+        padding: 30px 15px;
+        border-radius: 20px;
+    }
 }
