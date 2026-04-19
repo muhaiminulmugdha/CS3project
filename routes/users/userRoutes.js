@@ -111,4 +111,14 @@ router.post('/account/password', requireLogin, async (req, res) => {
     }
 });
 
+// Logout route
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error(err);
+        }
+        res.redirect('/');
+    });
+});
+
 module.exports = router;
