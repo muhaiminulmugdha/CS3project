@@ -61,22 +61,39 @@
         <% if (answers.length === 0) { %>
             <p class="no-answers">No answers yet. Be the first to help!</p>
         <% } else { %>
-            <% answers.forEach(function(a) { %>
-                <div class="answer-card">
+            <%
+                const sortedAnswers = [...answers].sort((a, b) => {
+                    if (question.bestAnswer && a._id.toString() === question.bestAnswer.toString()) return -1;
+                    if (question.bestAnswer && b._id.toString() === question.bestAnswer.toString()) return 1;
+                    return 0;
+                });
+            %>
+            <% sortedAnswers.forEach(function(a) { %>
+                <div class="answer-card <%= question.bestAnswer && a._id.toString() === question.bestAnswer.toString() ? 'best-answer' : '' %>">
+                    <% if (question.bestAnswer && a._id.toString() === question.bestAnswer.toString()) { %>
+                        <div class="best-answer-badge">✅ Best Answer</div>
+                    <% } %>
                     <p class="answer-text"><%= a.answer %></p>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span class="answer-date"><%= a.createdAt.toDateString() %></span>
                             <a href="/profile/<%= a.username %>" class="username-link">👤 <%= a.username %></a>
                         </div>
-                        <% if (user.username === a.username || user.role === 'teacher') { %>
-                            <div style="display: flex; gap: 8px;">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <% if (user.username === question.username || user.role === 'teacher') { %>
+                                <form method="POST" action="/question/<%= question._id %>/best-answer/<%= a._id %>">
+                                    <button type="submit" class="best-btn <%= question.bestAnswer && a._id.toString() === question.bestAnswer.toString() ? 'best-btn-active' : '' %>">
+                                        <%= question.bestAnswer && a._id.toString() === question.bestAnswer.toString() ? '✅ Best' : '☑️ Mark Best' %>
+                                    </button>
+                                </form>
+                            <% } %>
+                            <% if (user.username === a.username || user.role === 'teacher') { %>
                                 <a href="/answer/<%= a._id %>/edit" class="edit-btn">✏️ Edit</a>
                                 <form method="POST" action="/answer/<%= a._id %>/delete" onsubmit="return confirm('Delete this answer?')">
                                     <button type="submit" class="delete-btn">🗑️ Delete</button>
                                 </form>
-                            </div>
-                        <% } %>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
             <% }) %>

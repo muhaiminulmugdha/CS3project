@@ -6,6 +6,7 @@ const questionSchema = new mongoose.Schema({
     class: { type: String, default: '' },
     language: { type: String, default: '' },
     assessment: { type: String, default: '' },
+    bestAnswer: { type: mongoose.Schema.Types.ObjectId, ref: 'Answer', default: null },
     createdAt: { type: Date, default: Date.now }
 });
 

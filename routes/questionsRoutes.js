@@ -192,4 +192,28 @@ router.post('/answer/:id/delete', requireLogin, async (req, res) => {
     }
 });
 
+// Mark best answer
+router.post('/question/:id/best-answer/:answerId', requireLogin, async (req, res) => {
+    try {
+        const question = await Question.findById(req.params.id);
+
+        if (question.username !== req.session.user.username && req.session.user.role !== 'teacher') {
+            return res.status(403).send('Only the question owner can mark the best answer');
+        }
+
+        // Toggle — if same answer clicked again, unmark it
+        if (question.bestAnswer && question.bestAnswer.toString() === req.params.answerId) {
+            question.bestAnswer = null;
+        } else {
+            question.bestAnswer = req.params.answerId;
+        }
+
+        await question.save();
+        res.redirect(`/question/${req.params.id}`);
+    } catch (err) {
+        console.error(err);
+        res.send('Error marking best answer');
+    }
+});
+
 module.exports = router;

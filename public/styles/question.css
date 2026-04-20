@@ -394,3 +394,52 @@ body.dark .assessment-tag {
 .username-link:hover {
     text-decoration: underline;
 }
+
+.best-answer {
+    border: 1.5px solid #2d7a2d !important;
+    background: var(--answer-bg) !important;
+}
+
+.best-answer-badge {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2d7a2d;
+    margin-bottom: 8px;
+}
+
+body.dark .best-answer-badge {
+    color: #7dda7d;
+}
+
+.best-btn {
+    background: rgba(0, 150, 0, 0.1);
+    color: #2d7a2d;
+    border: 0.5px solid rgba(0, 150, 0, 0.3);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+}
+
+.best-btn:hover {
+    background: rgba(0, 150, 0, 0.2);
+}
+
+.best-btn-active {
+    background: #2d7a2d;
+    color: #fff;
+    border-color: #2d7a2d;
+}
+
+.answer-text {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.question-text {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
