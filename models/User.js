@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     role: { type: String, default: 'student' },
     banned: { type: Boolean, default: false },
+    googleId: { type: String, default: null },
     createdAt: { type: Date, default: Date.now }
 });
 
