@@ -53,6 +53,11 @@
             <button class="filter-btn" onclick="filterQuestions('language', 'Java', event)">Java</button>
             <button class="filter-btn" onclick="filterQuestions('language', 'C++', event)">C++</button>
         </div>
+        <div class="filter-group">
+            <span class="filter-label">Status:</span>
+            <button class="filter-btn active" onclick="filterStatus('all', event)">All</button>
+            <button class="filter-btn" onclick="filterStatus('unanswered', event)">Unanswered (<%= unansweredCount %>)</button>
+        </div>
     </div>
 
     <p class="questions-count" id="questions-count"><%= totalQuestions %> question<%= totalQuestions !== 1 ? 's' : '' %></p>
@@ -64,7 +69,8 @@
             <% questions.forEach(function(q) { %>
                 <a href="/question/<%= q._id %>" class="question-row-link"
                    data-class="<%= q.class || '' %>"
-                   data-language="<%= q.language || '' %>">
+                   data-language="<%= q.language || '' %>"
+                   data-answers="<%= q.answerCount %>">
                     <div class="question-row">
                         <div class="question-stats">
                             <div class="stat">
@@ -116,6 +122,14 @@
 
     let activeClass = '';
     let activeLanguage = '';
+    let activeStatus = 'all';
+
+    function filterStatus(status, event) {
+        activeStatus = status;
+        document.querySelectorAll('.filter-group')[2].querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        applyFilters();
+    }
 
     function filterQuestions(type, value, event) {
         if (type === 'class') {
@@ -127,19 +141,23 @@
             document.querySelectorAll('.filter-group')[1].querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
         }
         event.target.classList.add('active');
+        applyFilters();
+    }
 
+    function applyFilters() {
         const rows = document.querySelectorAll('.question-row-link');
         let visible = 0;
         rows.forEach(row => {
             const rowClass = row.dataset.class || '';
             const rowLanguage = row.dataset.language || '';
+            const rowAnswers = parseInt(row.dataset.answers) || 0;
             const classMatch = activeClass === '' || rowClass === activeClass;
             const languageMatch = activeLanguage === '' || rowLanguage === activeLanguage;
-            const show = classMatch && languageMatch;
+            const statusMatch = activeStatus === 'all' || (activeStatus === 'unanswered' && rowAnswers === 0);
+            const show = classMatch && languageMatch && statusMatch;
             row.style.display = show ? 'block' : 'none';
             if (show) visible++;
         });
-
         document.getElementById('questions-count').textContent = `${visible} question${visible !== 1 ? 's' : ''}`;
     }
 

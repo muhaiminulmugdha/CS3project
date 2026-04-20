@@ -7,7 +7,7 @@ const requireLogin = require('../middleware/auth');
 router.get('/help_bros', requireLogin, async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
-        const limit = 10;
+        const limit = 20;
         const skip = (page - 1) * limit;
 
         const totalQuestions = await Question.countDocuments();
@@ -23,12 +23,21 @@ router.get('/help_bros', requireLogin, async (req, res) => {
             return { ...q.toObject(), answerCount };
         }));
 
+        // Count total unanswered
+        const allQuestions = await Question.find();
+        let unansweredCount = 0;
+        for (const q of allQuestions) {
+            const count = await Answer.countDocuments({ questionId: q._id });
+            if (count === 0) unansweredCount++;
+        }
+
         res.render('help_bros', { 
             questions: questionsWithCounts, 
             user: req.session.user,
             currentPage: page,
             totalPages,
-            totalQuestions
+            totalQuestions,
+            unansweredCount
         });
     } catch (err) {
         console.error(err);
