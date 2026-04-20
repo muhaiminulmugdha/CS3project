@@ -65,12 +65,34 @@
 </div>
 
 <div class="questions-feed">
+    <div class="filters">
+        <div class="filter-group">
+            <span class="filter-label">Class:</span>
+            <button class="filter-btn active" onclick="filterQuestions('class', '')">All</button>
+            <button class="filter-btn" onclick="filterQuestions('class', 'APCSP')">APCSP</button>
+            <button class="filter-btn" onclick="filterQuestions('class', 'CS2')">CS2</button>
+            <button class="filter-btn" onclick="filterQuestions('class', 'IT2')">IT2</button>
+        </div>
+        <div class="filter-group">
+            <span class="filter-label">Language:</span>
+            <button class="filter-btn active" onclick="filterQuestions('language', '')">All</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'Python')">Python</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'JavaScript')">JavaScript</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'HTML')">HTML</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'CSS')">CSS</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'Java')">Java</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'C++')">C++</button>
+        </div>
+    </div>
+
     <p class="feed-label">Recent Questions</p>
     <% if (questions.length === 0) { %>
         <p class="no-questions">No questions yet. Be the first to ask!</p>
     <% } else { %>
         <% questions.forEach(function(q) { %>
-            <a href="/question/<%= q._id %>" class="question-card-link">
+            <a href="/question/<%= q._id %>" class="question-card-link" 
+               data-class="<%= q.class || '' %>" 
+               data-language="<%= q.language || '' %>">
                 <div class="question-card">
                     <p class="question-text"><%= q.askedquestions %></p>
                     <div class="question-tags">
@@ -101,6 +123,31 @@
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark');
         document.getElementById('toggleBtn').textContent = '☀️ Light';
+    }
+
+    // Active filters
+    let activeClass = '';
+    let activeLanguage = '';
+
+    function filterQuestions(type, value) {
+        if (type === 'class') activeClass = value;
+        if (type === 'language') activeLanguage = value;
+
+        // Update active buttons
+        document.querySelectorAll(`.filter-btn`).forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+
+        // Filter cards
+        const cards = document.querySelectorAll('.question-card-link');
+        cards.forEach(card => {
+            const cardClass = card.dataset.class || '';
+            const cardLanguage = card.dataset.language || '';
+            const classMatch = activeClass === '' || cardClass === activeClass;
+            const languageMatch = activeLanguage === '' || cardLanguage === activeLanguage;
+            card.style.display = classMatch && languageMatch ? 'block' : 'none';
+        });
     }
 
     // Live search

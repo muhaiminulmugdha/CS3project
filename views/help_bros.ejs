@@ -35,14 +35,37 @@
         <a href="/ask_bros" class="ask-btn">+ Ask Question</a>
     </div>
 
-    <p class="questions-count"><%= questions.length %> question<%= questions.length !== 1 ? 's' : '' %></p>
+    <!-- Filters -->
+    <div class="filters">
+        <div class="filter-group">
+            <span class="filter-label">Class:</span>
+            <button class="filter-btn active" onclick="filterQuestions('class', '', event)">All</button>
+            <button class="filter-btn" onclick="filterQuestions('class', 'APCSP', event)">APCSP</button>
+            <button class="filter-btn" onclick="filterQuestions('class', 'CS2', event)">CS2</button>
+            <button class="filter-btn" onclick="filterQuestions('class', 'IT2', event)">IT2</button>
+        </div>
+        <div class="filter-group">
+            <span class="filter-label">Language:</span>
+            <button class="filter-btn active" onclick="filterQuestions('language', '', event)">All</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'Python', event)">Python</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'JavaScript', event)">JavaScript</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'HTML', event)">HTML</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'CSS', event)">CSS</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'Java', event)">Java</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'C++', event)">C++</button>
+        </div>
+    </div>
+
+    <p class="questions-count" id="questions-count"><%= questions.length %> question<%= questions.length !== 1 ? 's' : '' %></p>
 
     <div class="questions-list">
         <% if (questions.length === 0) { %>
             <p class="no-questions">No questions yet. Be the first to ask!</p>
         <% } else { %>
             <% questions.forEach(function(q) { %>
-                <a href="/question/<%= q._id %>" class="question-row-link">
+                <a href="/question/<%= q._id %>" class="question-row-link"
+                   data-class="<%= q.class || '' %>"
+                   data-language="<%= q.language || '' %>">
                     <div class="question-row">
                         <div class="question-stats">
                             <div class="stat">
@@ -53,7 +76,9 @@
                         <div class="question-content">
                             <p class="question-title"><%= q.askedquestions %></p>
                             <div class="question-meta">
-                                <span class="question-tag">question</span>
+                                <% if (q.class) { %><span class="tag class-tag"><%= q.class %></span><% } %>
+                                <% if (q.language) { %><span class="tag lang-tag"><%= q.language %></span><% } %>
+                                <% if (q.assessment) { %><span class="tag assessment-tag">📝 <%= q.assessment %></span><% } %>
                                 <span class="question-info">asked by 👤 <%= q.username %> · <%= q.createdAt.toDateString() %></span>
                             </div>
                         </div>
@@ -74,6 +99,35 @@
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark');
         document.getElementById('toggleBtn').textContent = '☀️ Light';
+    }
+
+    let activeClass = '';
+    let activeLanguage = '';
+
+    function filterQuestions(type, value, event) {
+        if (type === 'class') {
+            activeClass = value;
+            document.querySelectorAll('.filter-group')[0].querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        }
+        if (type === 'language') {
+            activeLanguage = value;
+            document.querySelectorAll('.filter-group')[1].querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        }
+        event.target.classList.add('active');
+
+        const rows = document.querySelectorAll('.question-row-link');
+        let visible = 0;
+        rows.forEach(row => {
+            const rowClass = row.dataset.class || '';
+            const rowLanguage = row.dataset.language || '';
+            const classMatch = activeClass === '' || rowClass === activeClass;
+            const languageMatch = activeLanguage === '' || rowLanguage === activeLanguage;
+            const show = classMatch && languageMatch;
+            row.style.display = show ? 'block' : 'none';
+            if (show) visible++;
+        });
+
+        document.getElementById('questions-count').textContent = `${visible} question${visible !== 1 ? 's' : ''}`;
     }
 
     // Live search
