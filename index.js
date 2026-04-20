@@ -4,6 +4,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('./config/passport');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const xssClean = require('xss-clean');
 const connectDB = require('./config/db');
 const questionRoutes = require('./routes/questionsRoutes');
 const userRoutes = require('./routes/users/userRoutes');
@@ -14,16 +17,46 @@ const authRoutes = require('./routes/authRoutes');
 // Connect to MongoDB
 connectDB();
 
+// Security middleware
+app.use(helmet({
+    contentSecurityPolicy: false // disable for EJS compatibility
+}));
+
+// Rate limiting — max 100 requests per 15 minutes per IP
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: 'Too many requests, please try again later.'
+});
+app.use(limiter);
+
+// Stricter rate limit for login/signup — max 10 attempts per 15 minutes
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    message: 'Too many login attempts, please try again later.'
+});
+app.use('/api/v1/users/login', authLimiter);
+app.use('/api/v1/users/signup', authLimiter);
+
+// XSS protection — sanitize user input
+app.use(xssClean());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-// Session setup — MUST be before passport
+// Session setup
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
 }));
 
 // Passport setup
