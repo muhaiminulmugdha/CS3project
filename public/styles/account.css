@@ -220,3 +220,30 @@ body.dark .success-message {
 body.dark .error-message {
     color: #f0a0a0;
 }
+
+.danger-card {
+    border-color: rgba(255, 0, 0, 0.2) !important;
+}
+
+.danger-text {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.delete-account-btn {
+    background: rgba(255, 0, 0, 0.1);
+    color: #c0392b;
+    border: 0.5px solid rgba(255, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+}
+
+.delete-account-btn:hover {
+    background: rgba(255, 0, 0, 0.2);
+}

@@ -4,6 +4,8 @@ const router = express.Router();
 const User = require('../../models/User');
 const devEmails = require('../../config/devEmail');
 const requireLogin = require('../../middleware/auth');
+const Question = require('../../models/Question');
+const Answer = require('../../models/Answer');
 
 // Signup route
 router.post('/api/v1/users/signup', async (req, res) => {
@@ -119,6 +121,40 @@ router.get('/logout', (req, res) => {
         }
         res.redirect('/');
     });
+});
+
+router.post('/account/delete', requireLogin, async (req, res) => {
+    try {
+        const userId = req.session.user._id;
+        const username = req.session.user.username;
+
+        // Handle questions
+        const questions = await Question.find({ username });
+        for (const question of questions) {
+            const answerCount = await Answer.countDocuments({ questionId: question._id });
+            if (answerCount === 0) {
+                // No answers — delete the question
+                await Question.findByIdAndDelete(question._id);
+            } else {
+                // Has answers — keep but anonymize
+                await Question.findByIdAndUpdate(question._id, { username: 'Deleted User' });
+            }
+        }
+
+        // Anonymize their answers (keep them but remove username)
+        await Answer.updateMany({ username }, { username: 'Deleted User' });
+
+        // Delete the user
+        await User.findByIdAndDelete(userId);
+
+        // Destroy session
+        req.session.destroy();
+        res.redirect('/');
+
+    } catch (err) {
+        console.error(err);
+        res.send('Error deleting account');
+    }
 });
 
 module.exports = router;
