@@ -43,7 +43,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
             <span class="question-date"><%= question.createdAt.toDateString() %></span>
             <div style="display: flex; align-items: center; gap: 12px;">
-                <span class="question-user">👤 <%= question.username %></span>
+                <a href="/profile/<%= question.username %>" class="username-link">👤 <%= question.username %></a>
                 <% if (user.username === question.username || user.role === 'teacher') { %>
                     <div style="display: flex; gap: 8px;">
                         <a href="/question/<%= question._id %>/edit" class="edit-btn">✏️ Edit</a>
@@ -67,7 +67,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <span class="answer-date"><%= a.createdAt.toDateString() %></span>
-                            <span class="answer-user">👤 <%= a.username %></span>
+                            <a href="/profile/<%= a.username %>" class="username-link">👤 <%= a.username %></a>
                         </div>
                         <% if (user.username === a.username || user.role === 'teacher') { %>
                             <div style="display: flex; gap: 8px;">

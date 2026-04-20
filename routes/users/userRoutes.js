@@ -157,4 +157,27 @@ router.post('/account/delete', requireLogin, async (req, res) => {
     }
 });
 
+// Profile page
+router.get('/profile/:username', requireLogin, async (req, res) => {
+    try {
+        const profileUser = await User.findOne({ username: req.params.username });
+        if (!profileUser) {
+            return res.status(404).send('User not found');
+        }
+
+        const questions = await Question.find({ username: req.params.username }).sort({ createdAt: -1 });
+        const answers = await Answer.find({ username: req.params.username }).sort({ createdAt: -1 });
+
+        res.render('profile', {
+            user: req.session.user,
+            profileUser,
+            questions,
+            answers
+        });
+    } catch (err) {
+        console.error(err);
+        res.send('Error loading profile');
+    }
+});
+
 module.exports = router;

@@ -68,20 +68,20 @@
     <div class="filters">
         <div class="filter-group">
             <span class="filter-label">Class:</span>
-            <button class="filter-btn active" onclick="filterQuestions('class', '')">All</button>
-            <button class="filter-btn" onclick="filterQuestions('class', 'APCSP')">APCSP</button>
-            <button class="filter-btn" onclick="filterQuestions('class', 'CS2')">CS2</button>
-            <button class="filter-btn" onclick="filterQuestions('class', 'IT2')">IT2</button>
+            <button class="filter-btn active" onclick="filterQuestions('class', '', event)">All</button>
+            <button class="filter-btn" onclick="filterQuestions('class', 'APCSP', event)">APCSP</button>
+            <button class="filter-btn" onclick="filterQuestions('class', 'CS2', event)">CS2</button>
+            <button class="filter-btn" onclick="filterQuestions('class', 'IT2', event)">IT2</button>
         </div>
         <div class="filter-group">
             <span class="filter-label">Language:</span>
-            <button class="filter-btn active" onclick="filterQuestions('language', '')">All</button>
-            <button class="filter-btn" onclick="filterQuestions('language', 'Python')">Python</button>
-            <button class="filter-btn" onclick="filterQuestions('language', 'JavaScript')">JavaScript</button>
-            <button class="filter-btn" onclick="filterQuestions('language', 'HTML')">HTML</button>
-            <button class="filter-btn" onclick="filterQuestions('language', 'CSS')">CSS</button>
-            <button class="filter-btn" onclick="filterQuestions('language', 'Java')">Java</button>
-            <button class="filter-btn" onclick="filterQuestions('language', 'C++')">C++</button>
+            <button class="filter-btn active" onclick="filterQuestions('language', '', event)">All</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'Python', event)">Python</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'JavaScript', event)">JavaScript</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'HTML', event)">HTML</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'CSS', event)">CSS</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'Java', event)">Java</button>
+            <button class="filter-btn" onclick="filterQuestions('language', 'C++', event)">C++</button>
         </div>
     </div>
 
@@ -90,8 +90,8 @@
         <p class="no-questions">No questions yet. Be the first to ask!</p>
     <% } else { %>
         <% questions.forEach(function(q) { %>
-            <a href="/question/<%= q._id %>" class="question-card-link" 
-               data-class="<%= q.class || '' %>" 
+            <a href="/question/<%= q._id %>" class="question-card-link"
+               data-class="<%= q.class || '' %>"
                data-language="<%= q.language || '' %>">
                 <div class="question-card">
                     <p class="question-text"><%= q.askedquestions %></p>
@@ -104,7 +104,7 @@
                         <span class="question-date"><%= q.createdAt.toDateString() %></span>
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span class="answer-count"><%= q.answerCount %> answer<%= q.answerCount !== 1 ? 's' : '' %></span>
-                            <span class="question-user">👤 <%= q.username %></span>
+                            <a href="/profile/<%= q.username %>" class="username-link" onclick="event.stopPropagation()">👤 <%= q.username %></a>
                         </div>
                     </div>
                 </div>
@@ -125,21 +125,20 @@
         document.getElementById('toggleBtn').textContent = '☀️ Light';
     }
 
-    // Active filters
     let activeClass = '';
     let activeLanguage = '';
 
-    function filterQuestions(type, value) {
-        if (type === 'class') activeClass = value;
-        if (type === 'language') activeLanguage = value;
-
-        // Update active buttons
-        document.querySelectorAll(`.filter-btn`).forEach(btn => {
-            btn.classList.remove('active');
-        });
+    function filterQuestions(type, value, event) {
+        if (type === 'class') {
+            activeClass = value;
+            document.querySelectorAll('.filter-group')[0].querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        }
+        if (type === 'language') {
+            activeLanguage = value;
+            document.querySelectorAll('.filter-group')[1].querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        }
         event.target.classList.add('active');
 
-        // Filter cards
         const cards = document.querySelectorAll('.question-card-link');
         cards.forEach(card => {
             const cardClass = card.dataset.class || '';

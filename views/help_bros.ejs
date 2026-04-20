@@ -35,7 +35,6 @@
         <a href="/ask_bros" class="ask-btn">+ Ask Question</a>
     </div>
 
-    <!-- Filters -->
     <div class="filters">
         <div class="filter-group">
             <span class="filter-label">Class:</span>
@@ -79,7 +78,7 @@
                                 <% if (q.class) { %><span class="tag class-tag"><%= q.class %></span><% } %>
                                 <% if (q.language) { %><span class="tag lang-tag"><%= q.language %></span><% } %>
                                 <% if (q.assessment) { %><span class="tag assessment-tag">📝 <%= q.assessment %></span><% } %>
-                                <span class="question-info">asked by 👤 <%= q.username %> · <%= q.createdAt.toDateString() %></span>
+                                <span class="question-info">asked by <a href="/profile/<%= q.username %>" class="username-link" onclick="event.stopPropagation()">👤 <%= q.username %></a> · <%= q.createdAt.toDateString() %></span>
                             </div>
                         </div>
                     </div>
