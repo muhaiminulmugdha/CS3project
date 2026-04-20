@@ -111,6 +111,20 @@
             </a>
         <% }) %>
     <% } %>
+
+    <% if (totalPages > 1) { %>
+        <div class="pagination">
+            <% if (currentPage > 1) { %>
+                <a href="/ask_bros?page=<%= currentPage - 1 %>" class="page-btn">← Prev</a>
+            <% } %>
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a href="/ask_bros?page=<%= i %>" class="page-btn <%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+            <% } %>
+            <% if (currentPage < totalPages) { %>
+                <a href="/ask_bros?page=<%= currentPage + 1 %>" class="page-btn">Next →</a>
+            <% } %>
+        </div>
+    <% } %>
 </div>
 
 <script>

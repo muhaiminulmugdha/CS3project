@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <p class="questions-count" id="questions-count"><%= questions.length %> question<%= questions.length !== 1 ? 's' : '' %></p>
+    <p class="questions-count" id="questions-count"><%= totalQuestions %> question<%= totalQuestions !== 1 ? 's' : '' %></p>
 
     <div class="questions-list">
         <% if (questions.length === 0) { %>
@@ -86,6 +86,20 @@
             <% }) %>
         <% } %>
     </div>
+
+    <% if (totalPages > 1) { %>
+        <div class="pagination">
+            <% if (currentPage > 1) { %>
+                <a href="/help_bros?page=<%= currentPage - 1 %>" class="page-btn">← Prev</a>
+            <% } %>
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a href="/help_bros?page=<%= i %>" class="page-btn <%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+            <% } %>
+            <% if (currentPage < totalPages) { %>
+                <a href="/help_bros?page=<%= currentPage + 1 %>" class="page-btn">Next →</a>
+            <% } %>
+        </div>
+    <% } %>
 </div>
 
 <script>
