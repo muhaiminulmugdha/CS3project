@@ -6,12 +6,13 @@ const devEmails = require('./devEmail');
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback'
+    callbackURL: process.env.NODE_ENV === 'production'
+        ? 'https://falconflow-f30q.onrender.com/auth/google/callback'
+        : 'http://localhost:3000/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         const email = profile.emails[0].value;
 
-        // Check if email is allowed
         const isDevEmail = devEmails.includes(email);
         const isCpsdEmail = email.endsWith('@cpsd.us');
 
@@ -19,22 +20,18 @@ passport.use(new GoogleStrategy({
             return done(null, false, { message: 'Only @cpsd.us emails are allowed' });
         }
 
-        // Check if user already exists
         let user = await User.findOne({ email });
 
         if (user) {
-            // Still check if email is allowed even for existing users
             if (!isDevEmail && !isCpsdEmail) {
                 return done(null, false, { message: 'Only @cpsd.us emails are allowed' });
             }
             return done(null, user);
         }
 
-        // Create new user
         const role = isDevEmail ? 'teacher' : 'student';
         const username = profile.displayName.replace(/\s+/g, '').toLowerCase();
 
-        // Make sure username is unique
         let finalUsername = username;
         let count = 1;
         while (await User.findOne({ username: finalUsername })) {
