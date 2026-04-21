@@ -30,18 +30,8 @@ body.dark {
     --answer-border: rgba(0,200,0,0.15);
 }
 
-body {
-    font-family: "Inter", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    transition: background 0.3s, color 0.3s;
-}
-
-header {
-    background: var(--nav-bg);
-    border-bottom: 0.5px solid var(--border);
-    transition: background 0.3s;
-}
+body { font-family: "Inter", sans-serif; background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; }
+header { background: var(--nav-bg); border-bottom: 0.5px solid var(--border); transition: background 0.3s; }
 
 nav {
     display: flex;
@@ -51,20 +41,11 @@ nav {
     gap: 20px;
 }
 
-.main-logo p a {
-    text-decoration: none;
-    font-family: "Slackey", serif;
-    font-size: 20px;
-}
-
+.main-logo p a { text-decoration: none; font-family: "Slackey", serif; font-size: 20px; }
 .bro { color: #973803; }
 .codes { color: #D75F33; }
 
-.nav-search {
-    flex: 1;
-    max-width: 500px;
-    margin: 0 20px;
-}
+.nav-search { flex: 1; max-width: 500px; margin: 0 20px; }
 
 .search-bar {
     width: 100%;
@@ -78,21 +59,8 @@ nav {
 }
 
 .search-bar:focus { border-color: var(--accent2); }
-
-.nav-bar {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.nav-objects a {
-    text-decoration: none;
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
+.nav-bar { display: flex; align-items: center; gap: 20px; }
+.nav-objects a { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: 0.5px; }
 .nav-objects a:hover { color: var(--accent2); }
 
 .dark-toggle {
@@ -106,24 +74,36 @@ nav {
     font-family: "Inter", sans-serif;
 }
 
-.logout a {
+.logout a { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; }
+
+.account-btn {
     text-decoration: none;
-    color: var(--muted);
+    color: var(--text);
     font-size: 13px;
     font-weight: 500;
+    background: var(--input-bg);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
 }
+
+.account-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+.dashboard-btn {
+    text-decoration: none;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--accent2);
+    border-radius: 20px;
+    padding: 6px 14px;
+}
+
+.dashboard-btn:hover { opacity: 0.9; }
 
 .question-page { max-width: 700px; margin: 30px auto; padding: 0 20px; }
 
-.back-btn {
-    display: inline-block;
-    margin-bottom: 20px;
-    text-decoration: none;
-    color: var(--accent2);
-    font-size: 14px;
-    font-weight: 500;
-}
-
+.back-btn { display: inline-block; margin-bottom: 20px; text-decoration: none; color: var(--accent2); font-size: 14px; font-weight: 500; }
 .back-btn:hover { opacity: 0.8; }
 
 .question-box {
@@ -141,20 +121,15 @@ nav {
     color: var(--text);
     margin-bottom: 10px;
     line-height: 1.6;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 .question-date { font-size: 12px; color: var(--muted); }
 .question-user { font-size: 12px; color: var(--accent2); font-weight: 500; }
 
-.section-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
-}
-
+.section-label { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
 .answers-section { margin-bottom: 28px; }
 
 .answer-card {
@@ -170,24 +145,17 @@ nav {
     color: var(--text);
     margin-bottom: 8px;
     line-height: 1.5;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 .answer-date { font-size: 12px; color: var(--muted); }
 .answer-user { font-size: 11px; color: var(--accent2); font-weight: 500; }
 
-.no-answers {
-    text-align: center;
-    color: var(--muted);
-    font-size: 15px;
-    padding: 30px 0;
-}
+.no-answers { text-align: center; color: var(--muted); font-size: 15px; padding: 30px 0; }
 
-.answer-form-box {
-    background: var(--card-bg);
-    border: 0.5px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-}
+.answer-form-box { background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 16px; padding: 24px; }
 
 .answer-form-box textarea {
     width: 100%;
@@ -219,22 +187,6 @@ nav {
 
 .answer-form-box button:hover { opacity: 0.9; }
 
-.account-btn {
-    text-decoration: none;
-    color: var(--text);
-    font-size: 13px;
-    font-weight: 500;
-    background: var(--input-bg);
-    border: 0.5px solid var(--border);
-    border-radius: 20px;
-    padding: 6px 14px;
-}
-
-.account-btn:hover {
-    border-color: var(--accent2);
-    color: var(--accent2);
-}
-
 .delete-btn {
     background: rgba(255, 0, 0, 0.1);
     color: #c0392b;
@@ -246,27 +198,9 @@ nav {
     font-family: "Inter", sans-serif;
 }
 
-.delete-btn:hover {
-    background: rgba(255, 0, 0, 0.2);
-}
+.delete-btn:hover { background: rgba(255, 0, 0, 0.2); }
 
-.dashboard-btn {
-    text-decoration: none;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 500;
-    background: var(--accent2);
-    border-radius: 20px;
-    padding: 6px 14px;
-}
-
-.dashboard-btn:hover { opacity: 0.9; }
-
-.vote-section {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 10px;
-}
+.vote-section { display: flex; gap: 8px; margin-bottom: 10px; }
 
 .vote-btn {
     background: var(--input-bg);
@@ -281,18 +215,8 @@ nav {
 }
 
 .vote-btn:hover { border-color: var(--accent2); }
-
-.upvote-btn.voted {
-    background: rgba(0, 150, 0, 0.15);
-    border-color: rgba(0, 150, 0, 0.4);
-    color: #2d7a2d;
-}
-
-.downvote-btn.voted {
-    background: rgba(255, 0, 0, 0.15);
-    border-color: rgba(255, 0, 0, 0.4);
-    color: #c0392b;
-}
+.upvote-btn.voted { background: rgba(0, 150, 0, 0.15); border-color: rgba(0, 150, 0, 0.4); color: #2d7a2d; }
+.downvote-btn.voted { background: rgba(255, 0, 0, 0.15); border-color: rgba(255, 0, 0, 0.4); color: #c0392b; }
 
 .edit-btn {
     background: rgba(0, 100, 255, 0.1);
@@ -308,108 +232,21 @@ nav {
 
 .edit-btn:hover { background: rgba(0, 100, 255, 0.2); }
 
-.askbros-selects {
-    display: flex;
-    gap: 10px;
-    margin: 12px 0;
-    flex-wrap: wrap;
-}
+.question-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+.tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+.class-tag { background: #e6f0fd; color: #1857a4; }
+.lang-tag { background: #fdeee6; color: #973803; }
+.assessment-tag { background: #f0f7e6; color: #3a6b10; }
+body.dark .class-tag { background: #0c2a4a; color: #7ab3f0; }
+body.dark .lang-tag { background: #3a1f0f; color: #f0a070; }
+body.dark .assessment-tag { background: #1a2f0a; color: #a0d060; }
 
-.askbros-selects select {
-    background: var(--input-bg);
-    border: 0.5px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 13px;
-    color: var(--text);
-    outline: none;
-    font-family: "Inter", sans-serif;
-    cursor: pointer;
-    flex: 1;
-}
+.username-link { color: var(--accent2); text-decoration: none; font-size: 11px; font-weight: 500; }
+.username-link:hover { text-decoration: underline; }
 
-.assessment-input {
-    background: var(--input-bg);
-    border: 0.5px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 13px;
-    color: var(--text);
-    outline: none;
-    font-family: "Inter", sans-serif;
-    flex: 1;
-}
-
-.question-tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin: 6px 0;
-}
-
-.tag {
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-weight: 500;
-}
-
-.class-tag {
-    background: #e6f0fd;
-    color: #1857a4;
-}
-
-.lang-tag {
-    background: #fdeee6;
-    color: #973803;
-}
-
-.assessment-tag {
-    background: #f0f7e6;
-    color: #3a6b10;
-}
-
-body.dark .class-tag {
-    background: #0c2a4a;
-    color: #7ab3f0;
-}
-
-body.dark .lang-tag {
-    background: #3a1f0f;
-    color: #f0a070;
-}
-
-body.dark .assessment-tag {
-    background: #1a2f0a;
-    color: #a0d060;
-}
-
-.username-link {
-    color: var(--accent2);
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 500;
-}
-
-.username-link:hover {
-    text-decoration: underline;
-}
-
-.best-answer {
-    border: 1.5px solid #2d7a2d !important;
-    background: var(--answer-bg) !important;
-}
-
-.best-answer-badge {
-    font-size: 12px;
-    font-weight: 600;
-    color: #2d7a2d;
-    margin-bottom: 8px;
-}
-
-body.dark .best-answer-badge {
-    color: #7dda7d;
-}
+.best-answer { border: 1.5px solid #2d7a2d !important; background: var(--answer-bg) !important; }
+.best-answer-badge { font-size: 12px; font-weight: 600; color: #2d7a2d; margin-bottom: 8px; }
+body.dark .best-answer-badge { color: #7dda7d; }
 
 .best-btn {
     background: rgba(0, 150, 0, 0.1);
@@ -422,24 +259,65 @@ body.dark .best-answer-badge {
     font-family: "Inter", sans-serif;
 }
 
-.best-btn:hover {
-    background: rgba(0, 150, 0, 0.2);
+.best-btn:hover { background: rgba(0, 150, 0, 0.2); }
+.best-btn-active { background: #2d7a2d; color: #fff; border-color: #2d7a2d; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    nav {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .nav-search {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .nav-bar { gap: 10px; flex-wrap: wrap; }
+    .nav-objects a { font-size: 12px; }
+    .account-btn { font-size: 12px; padding: 5px 10px; }
+    .dark-toggle { font-size: 11px; padding: 5px 10px; }
+    .dashboard-btn { font-size: 12px; padding: 5px 10px; }
+
+    .question-page { padding: 0 12px; margin: 16px auto; }
+    .question-box { padding: 16px; }
+    .question-text { font-size: 16px; }
+
+    .answer-card { padding: 12px 14px; }
+
+    .answer-form-box { padding: 16px; }
+
+    /* Stack action buttons on mobile */
+    .answer-card > div:last-child {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+
+    .answer-card > div:last-child > div:last-child {
+        flex-wrap: wrap;
+    }
 }
 
-.best-btn-active {
-    background: #2d7a2d;
-    color: #fff;
-    border-color: #2d7a2d;
-}
+@media (max-width: 480px) {
+    nav { padding: 10px 12px; }
+    .main-logo p a { font-size: 18px; }
+    .nav-bar { gap: 6px; }
+    .nav-objects a { font-size: 11px; }
 
-.answer-text {
-    word-break: break-word;
-    overflow-wrap: break-word;
-    white-space: pre-wrap;
-}
+    .question-text { font-size: 15px; }
+    .answer-text { font-size: 14px; }
 
-.question-text {
-    word-break: break-word;
-    overflow-wrap: break-word;
-    white-space: pre-wrap;
+    .best-btn, .edit-btn, .delete-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+
+    .answer-form-box button {
+        width: 100%;
+    }
 }

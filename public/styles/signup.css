@@ -125,6 +125,8 @@ input:focus { outline: none; }
     gap: 4px;
     font-size: 11px;
     color: var(--muted);
+    flex-wrap: wrap;
+    text-align: center;
 }
 
 a { color: var(--link-color); font-size: 11px; text-decoration: none; }
@@ -138,4 +140,40 @@ a { color: var(--link-color); font-size: 11px; text-decoration: none; }
     font-size: 13px;
     text-align: center;
     width: 100%;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    header {
+        padding: 20px 20px 0;
+    }
+
+    #signup-form {
+        padding: 30px 24px;
+        border-radius: 20px;
+    }
+
+    .signupForm {
+        min-height: 85vh;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 16px 16px 0;
+    }
+
+    nav p a { font-size: 18px; }
+
+    #signup-form {
+        padding: 24px 16px;
+        border-radius: 16px;
+        gap: 14px;
+    }
+
+    #signupBtn {
+        height: 50px;
+        font-size: 12px;
+    }
 }

@@ -128,7 +128,6 @@ input:focus { outline: none; }
 }
 
 .fPass { font-size: 15px; color: var(--muted); }
-
 a { color: var(--link-color); font-size: 11px; text-decoration: none; }
 
 .error-message {
@@ -160,9 +159,7 @@ a { color: var(--link-color); font-size: 11px; text-decoration: none; }
     margin-bottom: 8px;
 }
 
-.google-btn:hover {
-    background: #f5f5f5;
-}
+.google-btn:hover { background: #f5f5f5; }
 
 .divider {
     display: flex;
@@ -182,3 +179,45 @@ a { color: var(--link-color); font-size: 11px; text-decoration: none; }
     background: rgba(255,255,255,0.3);
 }
 
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    header {
+        padding: 20px 20px 0;
+    }
+
+    #login-form {
+        padding: 30px 24px;
+        border-radius: 20px;
+    }
+
+    .loginForm {
+        min-height: 85vh;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 16px 16px 0;
+    }
+
+    nav p a { font-size: 18px; }
+
+    #login-form {
+        padding: 24px 16px;
+        border-radius: 16px;
+        gap: 14px;
+    }
+
+    #loginBtn {
+        height: 50px;
+        font-size: 12px;
+    }
+
+    .google-btn {
+        font-size: 13px;
+        padding: 8px;
+    }
+
+    .fPass { font-size: 13px; }
+}

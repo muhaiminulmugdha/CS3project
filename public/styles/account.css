@@ -26,18 +26,8 @@ body.dark {
     --input-bg: #2a2a2a;
 }
 
-body {
-    font-family: "Inter", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    transition: background 0.3s, color 0.3s;
-}
-
-header {
-    background: var(--nav-bg);
-    border-bottom: 0.5px solid var(--border);
-    transition: background 0.3s;
-}
+body { font-family: "Inter", sans-serif; background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; }
+header { background: var(--nav-bg); border-bottom: 0.5px solid var(--border); transition: background 0.3s; }
 
 nav {
     display: flex;
@@ -47,20 +37,10 @@ nav {
     gap: 20px;
 }
 
-.main-logo p a {
-    text-decoration: none;
-    font-family: "Slackey", serif;
-    font-size: 20px;
-}
-
+.main-logo p a { text-decoration: none; font-family: "Slackey", serif; font-size: 20px; }
 .bro { color: #973803; }
 .codes { color: #D75F33; }
-
-.nav-search {
-    flex: 1;
-    max-width: 500px;
-    margin: 0 20px;
-}
+.nav-search { flex: 1; max-width: 500px; margin: 0 20px; }
 
 .search-bar {
     width: 100%;
@@ -74,21 +54,8 @@ nav {
 }
 
 .search-bar:focus { border-color: var(--accent2); }
-
-.nav-bar {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.nav-objects a {
-    text-decoration: none;
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
+.nav-bar { display: flex; align-items: center; gap: 20px; }
+.nav-objects a { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: 0.5px; }
 .nav-objects a:hover { color: var(--accent2); }
 
 .dark-toggle {
@@ -102,18 +69,9 @@ nav {
     font-family: "Inter", sans-serif;
 }
 
-.logout a {
-    text-decoration: none;
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 500;
-}
+.logout a { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; }
 
-.account-page {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
+.account-page { max-width: 600px; margin: 40px auto; padding: 0 20px; }
 
 .account-header {
     display: flex;
@@ -124,6 +82,7 @@ nav {
     border: 0.5px solid var(--border);
     border-radius: 16px;
     padding: 24px;
+    flex-wrap: wrap;
 }
 
 .avatar {
@@ -135,19 +94,11 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
-.account-header h1 {
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text);
-}
-
-.account-email {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 4px;
-}
+.account-header h1 { font-size: 22px; font-weight: 600; color: var(--text); }
+.account-email { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
 .account-card {
     background: var(--card-bg);
@@ -157,12 +108,7 @@ nav {
     margin-bottom: 20px;
 }
 
-.account-card h2 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: var(--text);
-}
+.account-card h2 { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--text); }
 
 .account-card input {
     width: 100%;
@@ -203,9 +149,7 @@ nav {
     font-size: 14px;
 }
 
-body.dark .success-message {
-    color: #7dda7d;
-}
+body.dark .success-message { color: #7dda7d; }
 
 .error-message {
     background: rgba(255, 0, 0, 0.1);
@@ -217,20 +161,11 @@ body.dark .success-message {
     font-size: 14px;
 }
 
-body.dark .error-message {
-    color: #f0a0a0;
-}
+body.dark .error-message { color: #f0a0a0; }
 
-.danger-card {
-    border-color: rgba(255, 0, 0, 0.2) !important;
-}
+.danger-card { border-color: rgba(255, 0, 0, 0.2) !important; }
 
-.danger-text {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 16px;
-    line-height: 1.5;
-}
+.danger-text { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
 
 .delete-account-btn {
     background: rgba(255, 0, 0, 0.1);
@@ -244,17 +179,48 @@ body.dark .error-message {
     font-family: "Inter", sans-serif;
 }
 
-.delete-account-btn:hover {
-    background: rgba(255, 0, 0, 0.2);
+.delete-account-btn:hover { background: rgba(255, 0, 0, 0.2); }
+
+.username-link { color: var(--accent2); text-decoration: none; font-size: 11px; font-weight: 500; }
+.username-link:hover { text-decoration: underline; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    nav {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .nav-search {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .nav-bar { gap: 10px; flex-wrap: wrap; }
+    .nav-objects a { font-size: 12px; }
+    .dark-toggle { font-size: 11px; padding: 5px 10px; }
+
+    .account-page { padding: 0 12px; margin: 20px auto; }
+    .account-header { padding: 16px; gap: 14px; }
+    .account-card { padding: 16px; }
+
+    .account-card button,
+    .delete-account-btn {
+        width: 100%;
+    }
 }
 
-.username-link {
-    color: var(--accent2);
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 500;
-}
+@media (max-width: 480px) {
+    nav { padding: 10px 12px; }
+    .main-logo p a { font-size: 18px; }
+    .nav-bar { gap: 6px; }
 
-.username-link:hover {
-    text-decoration: underline;
+    .account-header h1 { font-size: 18px; }
+    .avatar { width: 56px; height: 56px; font-size: 36px; }
+
+    .account-card h2 { font-size: 15px; }
+    .account-card input { font-size: 13px; }
 }

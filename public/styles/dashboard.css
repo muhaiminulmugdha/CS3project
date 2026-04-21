@@ -28,6 +28,7 @@ body.dark {
 
 body { font-family: "Inter", sans-serif; background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; }
 header { background: var(--nav-bg); border-bottom: 0.5px solid var(--border); }
+
 nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 40px; gap: 20px; }
 .main-logo p a { text-decoration: none; font-family: "Slackey", serif; font-size: 20px; }
 .bro { color: #973803; }
@@ -52,11 +53,11 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 .section { margin-bottom: 32px; }
 .section h2 { font-size: 18px; font-weight: 600; margin-bottom: 14px; color: var(--text); }
 
-.table-box { background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+.table-box { background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 12px; overflow-x: auto; }
 
-table { width: 100%; border-collapse: collapse; }
+table { width: 100%; border-collapse: collapse; min-width: 500px; }
 th { background: var(--input-bg); padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 0.5px solid var(--border); }
-td { padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 0.5px solid var(--border); }
+td { padding: 12px 16px; font-size: 14px; color: var(--text); border-bottom: 0.5px solid var(--border); word-break: break-word; }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: var(--input-bg); }
 
@@ -79,26 +80,54 @@ tr:hover td { background: var(--input-bg); }
 .delete-btn { background: rgba(255,0,0,0.1); color: #c0392b; border: 0.5px solid rgba(255,0,0,0.3); border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: "Inter", sans-serif; }
 .delete-btn:hover { background: rgba(255,0,0,0.2); }
 
-.promote-btn {
-    background: rgba(0, 100, 255, 0.1);
-    color: #1857a4;
-    border: 0.5px solid rgba(0, 100, 255, 0.3);
-    border-radius: 6px;
-    padding: 5px 12px;
-    font-size: 12px;
-    cursor: pointer;
-    font-family: "Inter", sans-serif;
-}
-
+.promote-btn { background: rgba(0, 100, 255, 0.1); color: #1857a4; border: 0.5px solid rgba(0, 100, 255, 0.3); border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: "Inter", sans-serif; }
 .promote-btn:hover { background: rgba(0, 100, 255, 0.2); }
 
-.username-link {
-    color: var(--accent2);
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 500;
+.username-link { color: var(--accent2); text-decoration: none; font-size: 11px; font-weight: 500; }
+.username-link:hover { text-decoration: underline; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    nav {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .nav-bar { gap: 10px; flex-wrap: wrap; }
+    .nav-objects a { font-size: 12px; }
+    .dark-toggle { font-size: 11px; padding: 5px 10px; }
+    .account-btn { font-size: 12px; padding: 5px 10px; }
+
+    .dashboard-page { padding: 0 12px; margin: 16px auto; }
+    .dashboard-title { font-size: 20px; margin-bottom: 16px; }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .stat-card { padding: 14px; }
+    .stat-card .stat-number { font-size: 22px; }
+
+    th { padding: 10px 12px; font-size: 11px; }
+    td { padding: 10px 12px; font-size: 13px; }
+
+    .ban-btn, .unban-btn, .delete-btn, .promote-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
 }
 
-.username-link:hover {
-    text-decoration: underline;
+@media (max-width: 480px) {
+    nav { padding: 10px 12px; }
+    .main-logo p a { font-size: 18px; }
+    .nav-bar { gap: 6px; }
+
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .stat-card .stat-number { font-size: 20px; }
+    .stat-card .stat-label { font-size: 11px; }
+
+    .section h2 { font-size: 16px; }
 }
