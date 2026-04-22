@@ -180,4 +180,36 @@ router.get('/profile/:username', requireLogin, async (req, res) => {
     }
 });
 
+// Leaderboard
+router.get('/leaderboard', requireLogin, async (req, res) => {
+    try {
+        const users = await User.find({ banned: false }).select('username role createdAt');
+        
+        const leaderboard = await Promise.all(users.map(async (u) => {
+            const answerCount = await Answer.countDocuments({ username: u.username });
+            const questions = await Question.countDocuments({ username: u.username });
+            
+            // Get total upvotes received
+            const answers = await Answer.find({ username: u.username });
+            const totalUpvotes = answers.reduce((sum, a) => sum + (a.upvotes || 0), 0);
+            
+            return {
+                username: u.username,
+                role: u.role,
+                answerCount,
+                questions,
+                totalUpvotes,
+                score: (answerCount * 10) + (totalUpvotes * 5) + (questions * 2)
+            };
+        }));
+
+        // Sort by score
+        leaderboard.sort((a, b) => b.score - a.score);
+
+        res.render('leaderboard', { user: req.session.user, leaderboard });
+    } catch (err) {
+        console.error(err);
+        res.send('Error loading leaderboard');
+    }
+});
 module.exports = router;
