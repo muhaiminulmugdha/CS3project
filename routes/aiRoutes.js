@@ -14,20 +14,17 @@ router.post('/api/ai/similar-questions', requireLogin, async (req, res) => {
             return res.json({ similar: [] });
         }
 
-        // Get all existing questions
         const allQuestions = await Question.find().sort({ createdAt: -1 }).limit(100);
 
         if (allQuestions.length === 0) {
             return res.json({ similar: [] });
         }
 
-        // Format questions for Gemini
-        const questionsList = allQuestions.map((q, i) => 
+        const questionsList = allQuestions.map((q, i) =>
             `${i + 1}. ID:${q._id} | ${q.askedquestions}`
         ).join('\n');
 
-        // Ask Gemini to find similar questions
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
         const prompt = `A student is about to post this question: "${question}"
 
@@ -44,11 +41,9 @@ If no questions are similar, respond with: []`;
         const result = await model.generateContent(prompt);
         const text = result.response.text().trim();
 
-        // Parse the response
         const ids = JSON.parse(text);
 
-        // Get the matching questions
-        const similar = allQuestions.filter(q => 
+        const similar = allQuestions.filter(q =>
             ids.includes(q._id.toString())
         ).map(q => ({
             _id: q._id,
