@@ -15,17 +15,18 @@ const teacherRoutes = require('./routes/teacherRoutes');
 const authRoutes = require('./routes/authRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 
-
-
 // Connect to MongoDB
 connectDB();
 
+// Trust proxy — required for Render
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
-    contentSecurityPolicy: false // disable for EJS compatibility
+    contentSecurityPolicy: false
 }));
 
-// Rate limiting — max 100 requests per 15 minutes per IP
+// Rate limiting
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
@@ -33,7 +34,6 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Stricter rate limit for login/signup — max 10 attempts per 15 minutes
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 10,
@@ -42,7 +42,7 @@ const authLimiter = rateLimit({
 app.use('/api/v1/users/login', authLimiter);
 app.use('/api/v1/users/signup', authLimiter);
 
-// XSS protection — sanitize user input
+// XSS protection
 app.use(xssClean());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -58,7 +58,8 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
 
