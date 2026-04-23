@@ -19,6 +19,7 @@
         <div class="nav-bar">
             <div class="nav-objects"><a href="/ask_bros">ASKBROS</a></div>
             <div class="nav-objects"><a href="/help_bros">HELPBROS</a></div>
+            <div class="nav-objects"><a href="/leaderboard">🏆 LEADERBOARD</a></div>
             <button class="dark-toggle" onclick="toggleDark()" id="toggleBtn">🌙 Dark</button>
             <a href="/account" class="account-btn">👤 <%= user.username %></a>
             <% if (user.role === 'teacher') { %>
@@ -36,8 +37,18 @@
                 <h1>AskBros</h1>
             </div>
             <div class="askbros-input">
-                <textarea name="ask_question" placeholder="Ask your question..."></textarea>
+                <textarea name="ask_question" id="question-input" placeholder="Ask your question..."></textarea>
             </div>
+
+            <!-- AI Similar Questions -->
+            <div id="ai-hints" class="ai-hints" style="display: none;">
+                <div class="ai-hints-header">
+                    🤖 <strong>Similar questions already exist:</strong>
+                    <span class="ai-hint-sub">Check if your question is already answered!</span>
+                </div>
+                <div id="ai-hints-list"></div>
+            </div>
+
             <div class="askbros-selects">
                 <select name="class">
                     <option value="">Select Class</option>
@@ -141,6 +152,7 @@
 
     let activeClass = '';
     let activeLanguage = '';
+    let aiTimeout = null;
 
     function filterQuestions(type, value, event) {
         if (type === 'class') {
@@ -171,6 +183,48 @@
             const text = card.querySelector('.question-text').textContent.toLowerCase();
             card.style.display = text.includes(query) ? 'block' : 'none';
         });
+    });
+
+    // AI hint — triggers after user stops typing for 1.5 seconds
+    document.getElementById('question-input').addEventListener('input', function() {
+        clearTimeout(aiTimeout);
+        const question = this.value.trim();
+
+        if (question.length < 15) {
+            document.getElementById('ai-hints').style.display = 'none';
+            return;
+        }
+
+        aiTimeout = setTimeout(async () => {
+            try {
+                const response = await fetch('/api/ai/similar-questions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question })
+                });
+
+                const data = await response.json();
+                const hintsDiv = document.getElementById('ai-hints');
+                const hintsList = document.getElementById('ai-hints-list');
+
+                if (data.similar && data.similar.length > 0) {
+                    hintsList.innerHTML = data.similar.map(q => `
+                        <a href="/question/${q._id}" class="ai-hint-item" target="_blank">
+                            <span class="ai-hint-text">${q.askedquestions}</span>
+                            <div class="ai-hint-tags">
+                                ${q.class ? `<span class="tag class-tag">${q.class}</span>` : ''}
+                                ${q.language ? `<span class="tag lang-tag">${q.language}</span>` : ''}
+                            </div>
+                        </a>
+                    `).join('');
+                    hintsDiv.style.display = 'block';
+                } else {
+                    hintsDiv.style.display = 'none';
+                }
+            } catch (err) {
+                console.error('AI hint error:', err);
+            }
+        }, 1500);
     });
 </script>
 </body>

@@ -13,6 +13,9 @@ const userRoutes = require('./routes/users/userRoutes');
 const feedRoutes = require('./routes/feedRoute');
 const teacherRoutes = require('./routes/teacherRoutes');
 const authRoutes = require('./routes/authRoutes');
+const aiRoutes = require('./routes/aiRoutes');
+
+
 
 // Connect to MongoDB
 connectDB();
@@ -69,6 +72,7 @@ app.use("/", userRoutes);
 app.use("/", feedRoutes);
 app.use("/", teacherRoutes);
 app.use("/", authRoutes);
+app.use("/", aiRoutes);
 
 app.get('/', (req, res) => { res.render('index'); });
 app.get('/about', (req, res) => { res.render('about'); });
