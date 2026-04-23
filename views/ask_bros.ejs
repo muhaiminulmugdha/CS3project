@@ -45,6 +45,7 @@
                 <div class="ai-hints-header">
                     🤖 <strong>Similar questions already exist:</strong>
                     <span class="ai-hint-sub">Check if your question is already answered!</span>
+                    <button type="button" class="ai-hints-close" onclick="document.getElementById('ai-hints').style.display='none'">✕</button>
                 </div>
                 <div id="ai-hints-list"></div>
             </div>
@@ -185,7 +186,7 @@
         });
     });
 
-    // AI hint — triggers after user stops typing for 1.5 seconds
+    // AI hint — triggers after user stops typing for 1 second
     document.getElementById('question-input').addEventListener('input', function() {
         clearTimeout(aiTimeout);
         const question = this.value.trim();
@@ -209,7 +210,7 @@
 
                 if (data.similar && data.similar.length > 0) {
                     hintsList.innerHTML = data.similar.map(q => `
-                        <a href="/question/${q._id}" class="ai-hint-item" target="_blank">
+                        <a href="/question/${q._id}" class="ai-hint-item" onclick="document.getElementById('ai-hints').style.display='none'">
                             <span class="ai-hint-text">${q.askedquestions}</span>
                             <div class="ai-hint-tags">
                                 ${q.class ? `<span class="tag class-tag">${q.class}</span>` : ''}
