@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Question = require('../models/Question');
 const requireLogin = require('../middleware/auth');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { GoogleGenAI } = require('@google/genai');
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 router.post('/api/ai/similar-questions', requireLogin, async (req, res) => {
     try {
@@ -24,8 +24,6 @@ router.post('/api/ai/similar-questions', requireLogin, async (req, res) => {
             `${i + 1}. ID:${q._id} | ${q.askedquestions}`
         ).join('\n');
 
-        const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-
         const prompt = `A student is about to post this question: "${question}"
 
 Here are existing questions in the database:
@@ -38,9 +36,12 @@ Respond ONLY with a JSON array of IDs like this (no other text):
 
 If no questions are similar, respond with: []`;
 
-        const result = await model.generateContent(prompt);
-        const text = result.response.text().trim();
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt
+        });
 
+        const text = response.text.trim();
         const ids = JSON.parse(text);
 
         const similar = allQuestions.filter(q =>
