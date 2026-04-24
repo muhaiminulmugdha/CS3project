@@ -44,7 +44,6 @@ app.use('/api/v1/users/signup', authLimiter);
 
 // XSS protection
 app.use(xssClean());
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('view engine', 'ejs');
@@ -75,7 +74,15 @@ app.use("/", teacherRoutes);
 app.use("/", authRoutes);
 app.use("/", aiRoutes);
 
-app.get('/', (req, res) => { res.render('index'); });
+// Root — redirect to login if not logged in
+app.get('/', (req, res) => {
+    if (req.session && req.session.user) {
+        res.render('index');
+    } else {
+        res.redirect('/login');
+    }
+});
+
 app.get('/about', (req, res) => { res.render('about'); });
 app.get('/login', (req, res) => { res.render('login', { error: req.query.error || null, email: null }); });
 app.get('/signup', (req, res) => { res.render('signup', { error: null, username: null, email: null }); });

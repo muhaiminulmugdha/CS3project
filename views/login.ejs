@@ -10,9 +10,14 @@
 <body>
 <header>
     <nav>
-        <p><a href="/"><span class="bro">Falcon</span><span class="codes">Flow</span></a></p>
+        <p><a href="/login"><span class="bro">Falcon</span><span class="codes">Flow</span></a></p>
+        <div style="display: flex; gap: 16px; align-items: center;">
+            <a href="/about" style="color: var(--text); font-size: 13px; text-decoration: none; font-family: Inter, sans-serif; font-weight: 500;">About</a>
+            <button onclick="toggleDark()" id="toggleBtn" class="dark-toggle">🌙 Dark</button>
+        </div>
     </nav>
 </header>
+
 <div class="loginForm">
     <form method="POST" action="/api/v1/users/login" id="login-form">
         <h1>Login</h1>
@@ -36,13 +41,32 @@
             <label for="password">Password</label>
             <input required type="password" name="password" id="password"/>
         </div>
+
         <button id="loginBtn">Login</button>
-        <p class="fPass">Forgot password?</p>
+
         <div class="linkToSignUp">
-            <p>Don't have an account? </p>
+            <p>Don't have an account?</p>
             <a href="/signup">Sign up</a>
+        </div>
+
+        <div class="linkToSignUp" style="margin-top: 8px;">
+            <p>Learn more about FalconFlow?</p>
+            <a href="/about">About</a>
         </div>
     </form>
 </div>
+
+<script>
+    function toggleDark() {
+        document.body.classList.toggle('dark');
+        const btn = document.getElementById('toggleBtn');
+        btn.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+        localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+        document.getElementById('toggleBtn').textContent = '☀️ Light';
+    }
+</script>
 </body>
 </html>
