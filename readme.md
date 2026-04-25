@@ -220,7 +220,7 @@ GEMINI_API_KEY=your_gemini_api_key
 NODE_ENV=development
 ```
 
-> Ask Muhtasim on Discord for the credentials
+> Ask Ur builder on Discord for the credentials
 
 **4. Start the server:**
 ```bash
@@ -258,30 +258,6 @@ const devEmails = [
 ];
 
 module.exports = devEmails;
-```
-
----
-
-## 🌿 Git Workflow
-
-```bash
-# 1. Switch to your branch
-git checkout muhtasim
-
-# 2. Make changes and test locally
-npm run server
-
-# 3. Commit your changes
-git add .
-git commit -m "feat: describe what you built"
-git push origin muhtasim
-
-# 4. Deploy to Render
-git checkout master
-git pull origin master
-git merge muhtasim
-git push origin master
-git checkout muhtasim
 ```
 
 ---
