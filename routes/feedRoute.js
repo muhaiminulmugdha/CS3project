@@ -9,12 +9,17 @@ router.get('/help_bros', requireLogin, async (req, res) => {
         const page = parseInt(req.query.page) || 1;
         const limit = 20;
         const skip = (page - 1) * limit;
+        const sort = req.query.sort || 'newest';
+
+        // Sort options
+        let sortQuery = { createdAt: -1 }; // default newest
+        if (sort === 'oldest') sortQuery = { createdAt: 1 };
 
         const totalQuestions = await Question.countDocuments();
         const totalPages = Math.ceil(totalQuestions / limit);
 
-        const questions = await Question.find()
-            .sort({ createdAt: -1 })
+        let questions = await Question.find()
+            .sort(sortQuery)
             .skip(skip)
             .limit(limit);
 
@@ -22,6 +27,11 @@ router.get('/help_bros', requireLogin, async (req, res) => {
             const answerCount = await Answer.countDocuments({ questionId: q._id });
             return { ...q.toObject(), answerCount };
         }));
+
+        // Sort by most answered or most voted after fetching
+        if (sort === 'most-answered') {
+            questionsWithCounts.sort((a, b) => b.answerCount - a.answerCount);
+        }
 
         // Count total unanswered
         const allQuestions = await Question.find();
@@ -31,13 +41,14 @@ router.get('/help_bros', requireLogin, async (req, res) => {
             if (count === 0) unansweredCount++;
         }
 
-        res.render('help_bros', { 
-            questions: questionsWithCounts, 
+        res.render('help_bros', {
+            questions: questionsWithCounts,
             user: req.session.user,
             currentPage: page,
             totalPages,
             totalQuestions,
-            unansweredCount
+            unansweredCount,
+            currentSort: sort
         });
     } catch (err) {
         console.error(err);

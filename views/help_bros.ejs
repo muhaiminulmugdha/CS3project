@@ -19,6 +19,7 @@
         <div class="nav-bar">
             <div class="nav-objects"><a href="/ask_bros">ASKBROS</a></div>
             <div class="nav-objects"><a href="/help_bros">HELPBROS</a></div>
+            <div class="nav-objects"><a href="/leaderboard">🏆 LEADERBOARD</a></div>
             <button class="dark-toggle" onclick="toggleDark()" id="toggleBtn">🌙 Dark</button>
             <a href="/account" class="account-btn">👤 <%= user.username %></a>
             <% if (user.role === 'teacher') { %>
@@ -33,6 +34,14 @@
     <div class="helpbros-header">
         <h1>All Questions</h1>
         <a href="/ask_bros" class="ask-btn">+ Ask Question</a>
+    </div>
+
+    <!-- Sort Options -->
+    <div class="sort-group">
+        <span class="filter-label">Sort:</span>
+        <a href="/help_bros?sort=newest" class="sort-btn <%= currentSort === 'newest' ? 'active' : '' %>">🕐 Newest</a>
+        <a href="/help_bros?sort=oldest" class="sort-btn <%= currentSort === 'oldest' ? 'active' : '' %>">🕰️ Oldest</a>
+        <a href="/help_bros?sort=most-answered" class="sort-btn <%= currentSort === 'most-answered' ? 'active' : '' %>">💬 Most Answered</a>
     </div>
 
     <div class="filters">
@@ -96,13 +105,13 @@
     <% if (totalPages > 1) { %>
         <div class="pagination">
             <% if (currentPage > 1) { %>
-                <a href="/help_bros?page=<%= currentPage - 1 %>" class="page-btn">← Prev</a>
+                <a href="/help_bros?sort=<%= currentSort %>&page=<%= currentPage - 1 %>" class="page-btn">← Prev</a>
             <% } %>
             <% for (let i = 1; i <= totalPages; i++) { %>
-                <a href="/help_bros?page=<%= i %>" class="page-btn <%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+                <a href="/help_bros?sort=<%= currentSort %>&page=<%= i %>" class="page-btn <%= currentPage === i ? 'active' : '' %>"><%= i %></a>
             <% } %>
             <% if (currentPage < totalPages) { %>
-                <a href="/help_bros?page=<%= currentPage + 1 %>" class="page-btn">Next →</a>
+                <a href="/help_bros?sort=<%= currentSort %>&page=<%= currentPage + 1 %>" class="page-btn">Next →</a>
             <% } %>
         </div>
     <% } %>
