@@ -19,6 +19,10 @@ https://falconflow-f30q.onrender.com
 | bcryptjs | Password hashing |
 | express-session | User sessions |
 | Passport.js + Google OAuth | Google SSO |
+| helmet | Security headers |
+| express-rate-limit | Rate limiting |
+| xss-clean | XSS protection |
+| @google/genai | Gemini AI hints |
 | Render | Hosting + auto deploy |
 
 ---
@@ -34,31 +38,33 @@ CS3project/
 │   ├── passport.js             ← Google OAuth setup
 │   └── devEmail.js             ← Teacher email whitelist
 ├── middleware/
-│   ├── auth.js                 ← Require login middleware
+│   ├── auth.js                 ← Require login middleware (checks ban status from DB)
 │   └── teacherOnly.js          ← Require teacher role middleware
 ├── models/
 │   ├── User.js                 ← User schema (username, email, password, role, banned, googleId)
-│   ├── Question.js             ← Question schema (text, username, class, language, assessment)
+│   ├── Question.js             ← Question schema (text, username, class, language, assessment, bestAnswer)
 │   └── Answer.js               ← Answer schema (text, username, upvotes, downvotes, voters)
 ├── routes/
 │   ├── questionsRoutes.js      ← All question + answer routes
-│   ├── feedRoute.js            ← HelpBros feed route
+│   ├── feedRoute.js            ← HelpBros feed route with sort options
 │   ├── teacherRoutes.js        ← Teacher dashboard routes
 │   ├── authRoutes.js           ← Google OAuth routes
+│   ├── aiRoutes.js             ← Gemini AI similar questions route
 │   └── users/
-│       └── userRoutes.js       ← Auth + account routes
+│       └── userRoutes.js       ← Auth + account + leaderboard routes
 ├── views/
-│   ├── index.ejs               ← Landing page ← Ahnaf (needs styling)
-│   ├── about.ejs               ← About page ← Ahnaf (needs styling)
+│   ├── index.ejs               ← Landing page
+│   ├── about.ejs               ← About page
 │   ├── login.ejs               ← Login page (email + Google SSO)
 │   ├── signup.ejs              ← Signup page
-│   ├── ask_bros.ejs            ← Main Q&A feed
+│   ├── ask_bros.ejs            ← Main Q&A feed with AI hints
 │   ├── help_bros.ejs           ← Stack Overflow style feed
-│   ├── question.ejs            ← Question detail + answers
+│   ├── question.ejs            ← Question detail + answers + voting
 │   ├── edit_question.ejs       ← Edit question page
 │   ├── edit_answer.ejs         ← Edit answer page
 │   ├── account.ejs             ← Account settings + delete account
 │   ├── profile.ejs             ← User profile page
+│   ├── leaderboard.ejs         ← Leaderboard page
 │   └── dashboard.ejs           ← Teacher dashboard
 └── public/
     └── styles/
@@ -70,8 +76,9 @@ CS3project/
         ├── account.css
         ├── dashboard.css
         ├── profile.css
-        ├── index.css           ← Ahnaf (needs styling)
-        └── about.css           ← Ahnaf (needs styling)
+        ├── leaderboard.css
+        ├── index.css
+        └── about.css
 ```
 
 ---
@@ -83,25 +90,31 @@ CS3project/
 - Sign in with Google (restricted to @cpsd.us emails)
 - Teacher/dev emails bypass @cpsd.us restriction
 - Duplicate email and username check
-- Password hashing with bcryptjs
+- Password hashing with bcryptjs (min 6 characters)
+- Username validation (3-20 characters)
 - Login / Logout (session destroyed on logout)
 - Protected routes — must be logged in to access
-- Banned users redirected on login attempt
+- Banned users redirected on every request (checked against DB)
+- Root `/` redirects to login if not logged in
 
 ### ❓ Questions
-- Post a question with:
-  - Question text
-  - Class (APCSP, CS2, IT2)
-  - Language (Python, JavaScript, HTML, CSS, Java, C++, Other)
-  - Assessment name (optional)
+- Post a question with class, language, and assessment tags
 - View all questions on AskBros page (20 per page)
 - Answer count shown on each question card
-- Class, language, assessment tags shown on cards
 - Edit your own question
 - Delete your own question (and all its answers)
 - Live search — filters questions as you type
-- Filter by class and language
+- Filter by class (APCSP, CS2, IT2) and language
 - Pagination — 20 questions per page
+- Input validation (no empty questions, max 1000 chars)
+
+### 🤖 AI Hints (Gemini)
+- As a student types their question, AI suggests similar existing questions
+- Triggers after 3 seconds of no typing (debounced)
+- Shows up to 3 similar questions with tags
+- Vanishes when student clicks a hint
+- Has a close button to dismiss
+- Powered by Google Gemini 2.5 Flash
 
 ### 💬 Answers
 - Post answers on question detail page
@@ -110,17 +123,24 @@ CS3project/
 - Edit your own answer
 - Delete your own answer
 - Username and date shown on each answer
+- Input validation (no empty answers, max 5000 chars)
+
+### ✅ Best Answer
+- Question owner or teacher can mark one answer as best
+- Best answer shown at top with green highlight badge
+- Click again to unmark
 
 ### 📋 HelpBros Page
 - Stack Overflow style feed
 - Shows all questions with answer count
 - Filter by class and language
+- Filter by unanswered questions
+- Sort by newest, oldest, or most answered
 - Pagination — 20 questions per page
-- Click any question to go answer it
 
 ### 👤 Account Page
-- Change your username
-- Change your password
+- Change your username (validates uniqueness)
+- Change your password (validates current password)
 - Delete your account (anonymizes answered questions, deletes unanswered ones)
 
 ### 🧑 Profile Page
@@ -128,23 +148,38 @@ CS3project/
 - Shows all their questions and answers in tabs
 - Displays role badge, join date, question/answer counts
 
+### 🏆 Leaderboard
+- Shows top contributors ranked by score
+- Score = Answers × 10 + Upvotes × 5 + Questions × 2
+- Podium display for top 3
+- "You" badge highlights current user
+- Teacher badge shown next to teacher usernames
+
 ### 👩‍🏫 Teacher / Admin System
 - Emails in `config/devEmail.js` automatically get teacher role on signup
-- Teachers can also be promoted from the dashboard
 - Teacher dashboard at `/dashboard` shows:
   - Total users, questions, answers, banned users stats
   - Full user list with roles and status
   - Ban / unban any student
   - Promote student to teacher
-  - Delete any question
-  - Delete any answer
+  - Delete any question or answer
 
 ### 🎨 UI
 - Light / Dark mode toggle (preference saved in localStorage)
-- Search bar in center of nav
+- Responsive design — works on mobile and desktop
 - FalconFlow branding (Slackey + Inter fonts)
 - Orange/warm color scheme
-- index.ejs and about.ejs styling → assigned to Ahnaf
+
+### 🔒 Security
+- Helmet security headers
+- Rate limiting (100 req/15min general, 10 req/15min auth)
+- XSS protection via xss-clean
+- Banned users checked against DB on every request
+- Ownership checks on all edit/delete operations
+- Input validation on all forms
+- Secrets stored in environment variables (never in code)
+- Trust proxy configured for Render deployment
+- Session cookie with httpOnly, secure, sameSite settings
 
 ### ✅ Full CRUD
 | Operation | Questions | Answers |
@@ -178,9 +213,11 @@ npm install
 **3. Create a `.env` file** in the root of the project:
 ```
 MONGODB_URI=your_mongodb_connection_string
-SESSION_SECRET=falconflow_secret_2026
+SESSION_SECRET=your_session_secret
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
+GEMINI_API_KEY=your_gemini_api_key
+NODE_ENV=development
 ```
 
 > Ask Muhtasim on Discord for the credentials
@@ -205,8 +242,8 @@ http://localhost:3000
 | `SESSION_SECRET` | Secret key for session encryption |
 | `GOOGLE_CLIENT_ID` | Google OAuth client ID |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
-
-For Render deployment, add these in **Render Dashboard → Environment Variables**.
+| `GEMINI_API_KEY` | Google Gemini API key for AI hints |
+| `NODE_ENV` | Set to `production` on Render |
 
 ---
 
@@ -218,24 +255,18 @@ Add emails to `config/devEmail.js` to give teacher role on signup:
 const devEmails = [
     'teacher@cpsd.us',
     'admin@cpsd.us',
-    // Add more teacher emails here
 ];
 
 module.exports = devEmails;
 ```
 
-When they sign up with that email, they automatically get the teacher role.
-Teachers can also be promoted by an existing teacher from the `/dashboard` page.
-
 ---
 
 ## 🌿 Git Workflow
 
-Each team member works on their own branch and merges to master to deploy.
-
 ```bash
 # 1. Switch to your branch
-git checkout "you branch"   # or mugdho or ahnaf
+git checkout muhtasim
 
 # 2. Make changes and test locally
 npm run server
@@ -243,19 +274,15 @@ npm run server
 # 3. Commit your changes
 git add .
 git commit -m "feat: describe what you built"
-git push origin "your branch"
+git push origin muhtasim
 
-# 4. Deploy to Render (merge to master)
+# 4. Deploy to Render
 git checkout master
 git pull origin master
-git merge "your branch"
+git merge muhtasim
 git push origin master
-
-# 5. Go back to your branch
 git checkout muhtasim
 ```
-
-> Render automatically redeploys when master is updated — wait ~2 minutes after pushing
 
 ---
 
@@ -263,31 +290,35 @@ git checkout muhtasim
 
 | Method | Route | Description | Auth |
 |---|---|---|---|
-| GET | `/` | Landing page | Public |
+| GET | `/` | Redirects to login or index | Public |
 | GET | `/login` | Login page | Public |
 | POST | `/api/v1/users/login` | Login action | Public |
 | GET | `/signup` | Signup page | Public |
 | POST | `/api/v1/users/signup` | Signup action | Public |
 | GET | `/auth/google` | Google SSO start | Public |
 | GET | `/auth/google/callback` | Google SSO callback | Public |
+| GET | `/about` | About page | Public |
 | GET | `/logout` | Logout | Login required |
 | GET | `/ask_bros` | Main Q&A feed | Login required |
 | POST | `/ask-question` | Post a question | Login required |
 | GET | `/question/:id` | Question detail | Login required |
 | POST | `/question/:id/answer` | Post an answer | Login required |
+| POST | `/answer/:id/vote` | Upvote/downvote | Login required |
+| POST | `/question/:id/best-answer/:answerId` | Mark best answer | Owner/Teacher |
 | GET | `/question/:id/edit` | Edit question page | Owner/Teacher |
 | POST | `/question/:id/edit` | Save question edit | Owner/Teacher |
 | POST | `/question/:id/delete` | Delete question | Owner/Teacher |
 | GET | `/answer/:id/edit` | Edit answer page | Owner/Teacher |
 | POST | `/answer/:id/edit` | Save answer edit | Owner/Teacher |
 | POST | `/answer/:id/delete` | Delete answer | Owner/Teacher |
-| POST | `/answer/:id/vote` | Upvote/downvote | Login required |
 | GET | `/help_bros` | HelpBros feed | Login required |
+| GET | `/leaderboard` | Leaderboard | Login required |
 | GET | `/account` | Account settings | Login required |
 | POST | `/account/username` | Change username | Login required |
 | POST | `/account/password` | Change password | Login required |
 | POST | `/account/delete` | Delete account | Login required |
 | GET | `/profile/:username` | User profile | Login required |
+| POST | `/api/ai/similar-questions` | AI similar questions | Login required |
 | GET | `/dashboard` | Teacher dashboard | Teacher only |
 | POST | `/dashboard/ban/:id` | Ban/unban user | Teacher only |
 | POST | `/dashboard/promote/:id` | Promote to teacher | Teacher only |
@@ -300,29 +331,7 @@ git checkout muhtasim
 
 | Name | Branch | Assigned |
 |---|---|---|
-| Mugdho | `mugdho` | TBD |
+| Mugdho | `mugdho` | TBH |
 | Muhtasim | `muhtasim` | Backend + Features |
 | Ahnaf | `ahnaf` | Style index.ejs + about.ejs |
 
----
-
-## 🚧 Still To Do
-
-- [ ] Style `index.ejs` — Ahnaf
-- [ ] Style `about.ejs` — Ahnaf
-- [ ] Best/verified answer feature
-- [ ] Notifications
-
----
-
-## 🤝 Discord
-
-Team communication on Discord:
-
-| Channel | Purpose |
-|---|---|
-| `#general` | General chat |
-| `#code-help` | Ask for coding help |
-| `#bugs` | Report bugs |
-| `#features` | Feature ideas |
-| `#git-updates` | Paste commit messages |
