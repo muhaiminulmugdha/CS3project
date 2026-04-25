@@ -15,6 +15,14 @@ router.post('/api/v1/users/signup', async (req, res) => {
         return res.render('signup', { error: 'All fields are required', username, email });
     }
 
+    if (password.length < 6) {
+        return res.render('signup', { error: 'Password must be at least 6 characters', username, email });
+    }
+
+    if (username.length < 3 || username.length > 20) {
+        return res.render('signup', { error: 'Username must be between 3 and 20 characters', username, email });
+    }
+
     try {
         const existingEmail = await User.findOne({ email });
         if (existingEmail) {
@@ -76,11 +84,25 @@ router.get('/account', requireLogin, async (req, res) => {
 });
 
 // Change username
-router.post('/account/username', requireLogin, async (req, res) => {
+rrouter.post('/account/username', requireLogin, async (req, res) => {
     try {
         const { username } = req.body;
-        await User.findByIdAndUpdate(req.session.user._id, { username });
-        req.session.user.username = username;
+
+        if (!username || username.trim().length === 0) {
+            return res.render('account', { user: req.session.user, error: 'Username cannot be empty', success: null });
+        }
+
+        if (username.trim().length < 3 || username.trim().length > 20) {
+            return res.render('account', { user: req.session.user, error: 'Username must be between 3 and 20 characters', success: null });
+        }
+
+        const existing = await User.findOne({ username: username.trim() });
+        if (existing && existing._id.toString() !== req.session.user._id.toString()) {
+            return res.render('account', { user: req.session.user, error: 'Username already taken', success: null });
+        }
+
+        await User.findByIdAndUpdate(req.session.user._id, { username: username.trim() });
+        req.session.user.username = username.trim();
         res.render('account', { user: req.session.user, success: 'Username updated successfully!', error: null });
     } catch (err) {
         console.error(err);

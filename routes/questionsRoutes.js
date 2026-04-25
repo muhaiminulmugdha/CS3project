@@ -38,8 +38,14 @@ router.get('/ask_bros', requireLogin, async (req, res) => {
 
 router.post('/ask-question', requireLogin, async (req, res) => {
     try {
-        const newQuestion = new Question({ 
-            askedquestions: req.body.ask_question,
+        if (!req.body.ask_question || req.body.ask_question.trim().length === 0) {
+            return res.redirect('/ask_bros');
+        }
+        if (req.body.ask_question.trim().length > 1000) {
+            return res.redirect('/ask_bros');
+        }
+        const newQuestion = new Question({
+            askedquestions: req.body.ask_question.trim(),
             username: req.session.user.username,
             class: req.body.class,
             language: req.body.language,
@@ -66,9 +72,15 @@ router.get('/question/:id', requireLogin, async (req, res) => {
 
 router.post('/question/:id/answer', requireLogin, async (req, res) => {
     try {
+        if (!req.body.answer || req.body.answer.trim().length === 0) {
+            return res.redirect(`/question/${req.params.id}`);
+        }
+        if (req.body.answer.trim().length > 5000) {
+            return res.redirect(`/question/${req.params.id}`);
+        }
         const newAnswer = new Answer({
             questionId: req.params.id,
-            answer: req.body.answer,
+            answer: req.body.answer.trim(),
             username: req.session.user.username
         });
         await newAnswer.save();
