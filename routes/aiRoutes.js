@@ -31,7 +31,7 @@ ${questionsList}
 
 Find the top 3 most similar existing questions to what the student is asking. Only return questions that are genuinely similar in topic or meaning.
 
-Respond ONLY with a JSON array of IDs like this (no other text):
+Respond ONLY with a JSON array of IDs like this (no other text, no markdown, no backticks):
 ["id1", "id2", "id3"]
 
 If no questions are similar, respond with: []`;
@@ -41,7 +41,10 @@ If no questions are similar, respond with: []`;
             contents: prompt
         });
 
-        const text = response.text.trim();
+        // Strip markdown backticks if present
+        let text = response.text.trim();
+        text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+
         const ids = JSON.parse(text);
 
         const similar = allQuestions.filter(q =>
